@@ -39,7 +39,14 @@ rspec:
   extends: .ruby
   stage: test
   script:
-    - bundle exec rspec
+    - if [[ ! -v RSPEC_JUNIT_REPORT ]]; bundle exec rspec; fi
+    - if [[ "$RSPEC_JUNIT_REPORT" == "yes" ]]; bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml; fi
+  artifacts:
+    paths:
+      - coverage
+      - rspec.xml
+    reports:
+      junit: rspec.xml
   coverage: '/\(\d+.\d+%\)/'
   rules:
     - exists:
