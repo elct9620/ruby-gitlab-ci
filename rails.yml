@@ -1,0 +1,8 @@
+include:
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
+
+brakeman:
+  extends: .ruby
+  stage: lint
+  script:
+    - bundle exec brakeman
