@@ -8,6 +8,15 @@ stages:
   - lint
   - test
 
+rubocop:
+  extends: .ruby
+  stage: lint
+  script:
+    - bundle exec rubocop
+  rules:
+    - exists:
+      - .rubocop.yml
+
 bundler-audit:
   extends: .ruby
   stage: lint
@@ -32,3 +41,6 @@ rspec:
   script:
     - bundle exec rspec
   coverage: '/\(\d+.\d+%\)/'
+  rules:
+    - exists:
+      - spec/spec_helper.rb
