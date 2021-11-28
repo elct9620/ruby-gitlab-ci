@@ -1,0 +1,13 @@
+.ruby:
+  image: ruby:${RUBY_VERSION:-2.6.6}
+  before_script:
+    - export LANG=C.UTF-8
+    - export LC_ALL=C.UTF-8
+    - gem install bundler -v ${BUNDLER_VERSION:-2.2.28}
+    - bundle install --path vendor
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby

@@ -5,7 +5,7 @@ This is GitLab CI templates for Ruby and Rails project.
 
 ## Requirements
 
-GitLab 11.4+
+GitLab 14.3+
 
 ## Usage
 

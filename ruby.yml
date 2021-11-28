@@ -1,0 +1,15 @@
+include: common.yml
+
+stages:
+  - test
+
+.rspec:
+  extends:
+    - .ruby
+  script:
+    - bundle exec rspec
+  coverage: \(\d+.\d+%\)
+
+rspec:
+  extends: .rspec
+  stage: test
