@@ -5,15 +5,30 @@ variables:
   RUBY_VERSION: 3.0.2
 
 stages:
+  - lint
   - test
 
-.rspec:
-  extends:
-    - .ruby
+bundler-audit:
+  extends: .ruby
+  stage: lint
+  before_script:
+    - gem install bundler-audit
+    - bundle audit --update
+  script:
+    - bundle audit
+
+bundler-leak:
+  extends: .ruby
+  stage: lint
+  before_script:
+    - gem install bundler-leak
+    - bundle leak check --update
+  script:
+    - bundle leak
+
+rspec:
+  extends: .ruby
+  stage: test
   script:
     - bundle exec rspec
   coverage: '/\(\d+.\d+%\)/'
-
-rspec:
-  extends: .rspec
-  stage: test
