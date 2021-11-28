@@ -13,11 +13,11 @@ TODO
 
 ## Roadmap
 
-* [ ] Ruby support
-  * [ ] Rubocop
-  * [ ] RSpec
-  * [ ] Bundler Audit
-  * [ ] Bundler Leak
+* [*] Ruby support
+  * [*] Rubocop
+  * [*] RSpec
+  * [*] Bundler Audit
+  * [*] Bundler Leak
 * [ ] Rails support
   * [ ] Brakeman
   * [ ] Assets Precompile
