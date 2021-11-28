@@ -1,6 +1,9 @@
 include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml
 
+variables:
+  RUBY_VERSION: 3.0.2
+
 stages:
   - test
 
