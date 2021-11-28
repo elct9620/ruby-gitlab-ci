@@ -1,5 +1,5 @@
 .ruby:
-  image: ruby:${RUBY_VERSION:-2.6.6}
+  image: ruby:$RUBY_VERSION
   before_script:
     - export LANG=C.UTF-8
     - export LC_ALL=C.UTF-8
