@@ -9,7 +9,7 @@ stages:
     - .ruby
   script:
     - bundle exec rspec
-  coverage: /\(\d+.\d+%\)/
+  coverage: '/\(\d+.\d+%\)/'
 
 rspec:
   extends: .rspec
