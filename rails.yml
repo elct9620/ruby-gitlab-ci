@@ -3,8 +3,18 @@ include:
     - https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
     - https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
 
+variables:
+  POSTGRES_VERSION: 12-alpine
+
 brakeman:
   extends: .ruby
   stage: lint
   script:
     - bundle exec brakeman
+
+rspec:
+  services:
+    - postgres:$POSTGRES_VERSION
+  before_script:
+    - !reference ['.ruby', 'before_script']
+    - bundle exec rake db:migrate
