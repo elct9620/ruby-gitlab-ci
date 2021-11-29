@@ -4,10 +4,6 @@ include:
 variables:
   NODE_VERSION: 16.13.0
 
-stages:
-  - lint
-  - test
-
 yarn-audit:
   extends: .node
   stage: lint

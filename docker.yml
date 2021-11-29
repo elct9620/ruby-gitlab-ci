@@ -1,9 +1,6 @@
 include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#docker.yml
 
-stages:
-  - build
-
 variables:
   DOCKER_BUILDKIT: 1
 

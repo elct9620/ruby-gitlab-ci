@@ -1,3 +1,9 @@
+stages:
+  - lint
+  - test
+  - compile
+  - build
+
 .ruby:
   image: ruby:$RUBY_VERSION
   before_script:
