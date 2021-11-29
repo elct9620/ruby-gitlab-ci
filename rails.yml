@@ -14,10 +14,13 @@ variables:
   DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
 
 brakeman:
-  extends: .ruby
+  image: registry.gitlab.com/gitlab-org/security-products/analyzers/brakeman:2
   stage: lint
   script:
-    - bundle exec brakeman
+    - /analyzer run
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
 
 rspec:
   services:
