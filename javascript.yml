@@ -14,3 +14,4 @@ yarn-audit:
   before_script: []
   script:
     - yarn audit
+  allow_failure: true
