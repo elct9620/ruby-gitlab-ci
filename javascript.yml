@@ -1,5 +1,5 @@
 include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#javascript
 
 variables:
   NODE_VERSION: 16.13.0
