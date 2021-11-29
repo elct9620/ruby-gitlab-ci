@@ -11,3 +11,15 @@
         - Gemfile.lock
     paths:
       - vendor/ruby
+
+.node:
+  image: node:$NODE_VERSION
+  before_script:
+    - yarn install
+  cache:
+    key:
+      files:
+        - yarn.lock
+        - package-lock.json
+    paths:
+      - node_modules

@@ -1,0 +1,16 @@
+include:
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml
+
+variables:
+  NODE_VERSION: 16.13.0
+
+stages:
+  - lint
+  - test
+
+yarn-audit:
+  extends: .node
+  stage: lint
+  before_script: []
+  script:
+    - yarn audit

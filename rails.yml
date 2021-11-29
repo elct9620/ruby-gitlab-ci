@@ -1,5 +1,7 @@
 include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
+  remote:
+    - https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
+    - https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
 
 brakeman:
   extends: .ruby
