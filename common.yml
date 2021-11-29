@@ -40,9 +40,9 @@
         - Gemfile.lock
         - yarn.lock
         - package-lock.json
-      paths:
-        - vendor/ruby
-        - node_modules
+    paths:
+      - vendor/ruby
+      - node_modules
 
 .docker:
   image: docker:stable
