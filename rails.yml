@@ -37,7 +37,7 @@ assets:precompile:
   variables:
     RAILS_ENV: production
   script:
-    - rails assets:precompile
+    - bundle exec rails assets:precompile
   artifacts:
     paths:
       - public/packs
