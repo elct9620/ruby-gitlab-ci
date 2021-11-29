@@ -43,3 +43,14 @@
       paths:
         - vendor/ruby
         - node_modules
+
+.docker:
+  image: docker:stable
+  cache: {}
+  services:
+    - docker:20.10-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+  before_script:
+    - mkdir -p $HOME/.docker
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY

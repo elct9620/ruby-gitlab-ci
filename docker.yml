@@ -1,0 +1,24 @@
+include:
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#docker.yml
+
+stages:
+  - build
+
+variables:
+  DOCKER_BUILDKIT: 1
+
+docker:build:
+  extends: .docker
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --build-arg REVISION=${CI_COMMIT_SHORT_SHA}
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+      --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - if [ "$LATEST_IMAGE" == "yes" ]; then docker push $CI_REGISTRY_IMAGE:latest; fi
