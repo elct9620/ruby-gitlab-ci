@@ -39,7 +39,6 @@
       files:
         - Gemfile.lock
         - yarn.lock
-        - package-lock.json
     paths:
       - vendor/ruby
       - node_modules
