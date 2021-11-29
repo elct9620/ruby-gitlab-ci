@@ -40,4 +40,4 @@ assets:precompile:
       - public/packs
       - public/assets
   rules:
-    if: '$ASSETS_PRECOMPILE == "yes"'
+    - if: '$ASSETS_PRECOMPILE == "yes"'
