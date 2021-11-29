@@ -2,6 +2,11 @@ include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
 
+stages:
+  - lint
+  - test
+  - compile
+
 variables:
   POSTGRES_VERSION: 12-alpine
   POSTGRES_DB: application
@@ -20,3 +25,19 @@ rspec:
   before_script:
     - !reference [.ruby, before_script]
     - bundle exec rake db:migrate
+
+assets:precompile:
+  extends: .rails
+  stage: compile
+  services:
+    - postgres:$POSTGRES_VERSION
+  variables:
+    RAILS_ENV: production
+  script:
+    - rails assets:precompile
+  artifacts:
+    paths:
+      - public/packs
+      - public/assets
+  rules:
+    if: '$ASSETS_PRECOMPILE == "yes"'
