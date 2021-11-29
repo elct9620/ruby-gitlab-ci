@@ -4,6 +4,9 @@ include:
 
 variables:
   POSTGRES_VERSION: 12-alpine
+  POSTGRES_DB: application
+  POSTGRES_PASSWORD: postgres
+  DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
 
 brakeman:
   extends: .ruby
