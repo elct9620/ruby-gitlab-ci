@@ -26,10 +26,10 @@ docker:
     IMAGE_NAME: $CI_REGISTRY_IMAGE
     IMAGE_TAG: $CI_COMMIT_REF_SLUG
   rules:
-    - if: '$DOCKER_ENABLED == "yes"'
     - if: '$DOCKER_ENABLED == "yes" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       variables:
         LATEST_IMAGE: 'yes'
+    - if: '$DOCKER_ENABLED == "yes"'
 
 trivy:
   extends: .docker
