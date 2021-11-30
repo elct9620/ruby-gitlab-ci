@@ -1,6 +1,5 @@
 include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#ruby.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml#ruby.yml
 
 variables:
   RUBY_VERSION: 3.0.3
