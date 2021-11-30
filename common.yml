@@ -3,6 +3,7 @@ stages:
   - test
   - compile
   - build
+  - scan
 
 .ruby:
   image: ruby:$RUBY_VERSION
