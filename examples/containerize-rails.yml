@@ -14,6 +14,11 @@ bundler-leak:
     - if: $CI_MERGE_REQUEST_ID
     - if: $CI_PIPELINE_SOURCE == 'schedule'
 
+yarn-audit:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+
 rubocop:
   rules:
     - if: $CI_MERGE_REQUEST_ID
