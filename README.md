@@ -26,6 +26,8 @@ brakeman:
 
 ### Options
 
+The options are usually based on the `rules` keyword to enable the task. If you overwrite the `rules` the variables are not necessary to configure.
+
 | Type   | Environment Name    | Default | Description                                                          |
 |--------|---------------------|---------|----------------------------------------------------------------------|
 | Rails  | `ASSETS_PRECOMPILE` | Unset   | Run Rails Assets Precompile and save into artifacts                  |
