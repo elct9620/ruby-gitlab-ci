@@ -1,9 +1,6 @@
 include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
 
-variables:
-  RSPEC_JUNIT_REPORT: 'yes'
-
 bundler-audit:
   rules:
     - if: $CI_MERGE_REQUEST_ID
