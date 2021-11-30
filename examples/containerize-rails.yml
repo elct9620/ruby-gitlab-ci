@@ -26,13 +26,19 @@ brakeman:
     - if: $CI_MERGE_REQUEST_ID
 
 assets:precompile:
-  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  - if: $CI_COMMIT_TAG
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
 
 docker:
-  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  - if: $CI_COMMIT_TAG
+  needs:
+    - job: assets:precompile
+      artifacts: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
 
 trivy:
-  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  - if: $CI_PIPELINE_SOURCE == 'schedule'
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
