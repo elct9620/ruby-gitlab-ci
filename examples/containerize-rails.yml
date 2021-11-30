@@ -3,9 +3,6 @@ include:
 
 variables:
   RSPEC_JUNIT_REPORT: 'yes'
-  ASSETS_PRECOMPILE: 'yes'
-  DOCKER_ENABLED: 'yes'
-  TRIVY_ENABLED: 'yes'
 
 bundler-audit:
   rules:
