@@ -24,6 +24,14 @@ brakeman:
     - if: $CI_MERGE_REQUEST_ID
 ```
 
+### Options
+
+| Type   | Environment Name    | Default | Description                                                          |
+|--------|---------------------|---------|----------------------------------------------------------------------|
+| Rails  | `ASSETS_PRECOMPILE` | Unset   | Run Rails Assets Precompile and save into artifacts                  |
+| Docker | `DOCKER_ENABLED`    | Unset   | Run `docker build .`                                                 |
+| Docker | `TRIVY_ENABLED`     | Unset   | Use [trivy](https://github.com/aquasecurity/trivy) to scan container |
+
 ## Roadmap
 
 * [x] Ruby support
@@ -33,7 +41,7 @@ brakeman:
   * [x] Bundler Leak
 * [ ] Rails support
   * [x] Brakeman
-  * [ ] Assets Precompile
+  * [x] Assets Precompile
   * [ ] S3 Upload for CDN
   * [ ] Database
     * [x] PostgreSQL
@@ -43,6 +51,9 @@ brakeman:
   * [x] Yarn Audit
   * [ ] Jest
 * [ ] Containerize support
-  * [ ] Docker
+  * [x] Docker
   * [ ] Dockle
-  * [ ] Trivy Scanner
+  * [x] Trivy Scanner
+  * [ ] Registry
+    * [x] GitLab Registry
+    * [ ] AWS ECR
