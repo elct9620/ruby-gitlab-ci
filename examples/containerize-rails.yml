@@ -1,0 +1,38 @@
+include:
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
+
+variables:
+  RSPEC_JUNIT_REPORT: 'yes'
+  ASSETS_PRECOMPILE: 'yes'
+  DOCKER_ENABLED: 'yes'
+  TRIVY_ENABLED: 'yes'
+
+bundler-audit:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+
+bundler-leak:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+
+rubocop:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+
+brakeman:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+
+assets:precompile:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  - if: $CI_COMMIT_TAG
+
+docker:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  - if: $CI_COMMIT_TAG
+
+trivy:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  - if: $CI_PIPELINE_SOURCE == 'schedule'
