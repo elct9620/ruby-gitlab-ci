@@ -1,11 +1,7 @@
 include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
-
-stages:
-  - lint
-  - test
-  - compile
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml#rails.yml
 
 variables:
   POSTGRES_VERSION: 12-alpine

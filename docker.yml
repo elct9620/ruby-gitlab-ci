@@ -4,18 +4,29 @@ include:
 variables:
   DOCKER_BUILDKIT: 1
 
-docker:build:
+.docker:base:
   extends: .docker
   stage: build
   script:
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker pull $IMAGE_NAME:latest || true
     - docker build
-      --cache-from $CI_REGISTRY_IMAGE:latest
+      --cache-from $IMAGE_NAME:latest
       --build-arg REVISION=${CI_COMMIT_SHORT_SHA}
       --build-arg BUILDKIT_INLINE_CACHE=1
-      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-      --tag $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    - if [ "$LATEST_IMAGE" == "yes" ]; then docker push $CI_REGISTRY_IMAGE:latest; fi
+      --tag $IMAGE_NAME:$IMAGE_TAG
+      --tag $IMAGE_NAME:latest .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+    - docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - if [ "$LATEST_IMAGE" == "yes" ]; then docker push $IMAGE_NAME:latest; fi
+
+docker:
+  extends: .docker:base
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE
+    IMAGE_TAG: $CI_COMMIT_REF_SLUG
+  rules:
+    - if: '$DOCKER_ENABLED == "yes"'
+    - if: '$DOCKER_ENABLED == "yes" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      variables:
+        LATEST_IMAGE: 'yes'
