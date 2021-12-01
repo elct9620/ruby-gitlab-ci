@@ -35,6 +35,8 @@ docker:
       artifacts: true
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        LATEST_IMAGE: 'yes'
     - if: $CI_COMMIT_TAG
 
 trivy:
