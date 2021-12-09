@@ -42,6 +42,7 @@ rspec:
       - rspec.xml
     reports:
       junit: rspec.xml
+      cobertura: coverage/coverage.xml
   coverage: '/\(\d+.\d+%\)/'
   rules:
     - exists:
