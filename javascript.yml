@@ -22,3 +22,5 @@ yarn-audit:
   script:
     - yarn audit
   allow_failure: true
+  rules:
+    - if: '$NODE_PACKAGE_REQUIRED == "yes"'
