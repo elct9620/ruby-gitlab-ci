@@ -4,6 +4,15 @@ include:
 variables:
   RUBY_VERSION: 3.0.3
 
+rubygems:
+  extends: .ruby
+  stage: prepare
+  script:
+    - bundle install
+  cache:
+    - <<: *ruby-cache
+      policy: pull-push
+
 rubocop:
   extends: .ruby
   stage: lint
