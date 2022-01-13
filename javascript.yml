@@ -10,7 +10,8 @@ node_modules:
   script:
     - yarn install
   cache:
-    - !reference[.node-cache]
+    - key: !reference [.node-cache, key]
+      paths: !reference [.node-cache, paths]
       policy: pull-push
 
 yarn-audit:
