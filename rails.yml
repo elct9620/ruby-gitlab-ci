@@ -33,7 +33,7 @@ assets:precompile:
   variables:
     RAILS_ENV: production
   script:
-    - bundle exec rails assets:precompile
+    - RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY} bundle exec rails assets:precompile
   artifacts:
     paths:
       - public/packs
