@@ -16,6 +16,11 @@ yarn-audit:
     - if: $CI_MERGE_REQUEST_ID
     - if: $CI_PIPELINE_SOURCE == 'schedule'
 
+rspec:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_ID
+
 rubocop:
   rules:
     - if: $CI_MERGE_REQUEST_ID
