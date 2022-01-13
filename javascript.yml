@@ -14,7 +14,7 @@ node_modules:
       paths: !reference [.node-cache, paths]
       policy: pull-push
   rules:
-    if: '$NODE_PACKAGE_REQUIRED == "yes"'
+    - if: '$NODE_PACKAGE_REQUIRED == "yes"'
 
 yarn-audit:
   extends: .node
