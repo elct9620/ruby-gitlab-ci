@@ -31,11 +31,11 @@ stages:
       - package-lock.json
   paths:
     - node_modules
+  policy: pull
 
 .node:
   image: node:$NODE_VERSION
   before_script:
-    - yarn install
   cache:
     - <<: *node-cache
 
@@ -46,8 +46,7 @@ stages:
     - curl -SLO https://nodejs.org/dist/v$NODE_VERSION/node-v${NODE_VERSION}-linux-x64.tar.xz && tar -xJf node-v${NODE_VERSION}-linux-x64.tar.xz -C /usr/local --strip-components=1;
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
-    - !reference [.ruby, before_script]
-    - !reference [.node, before_script]
+    - !reference[.ruby, before_script]
   cache:
     - <<: *ruby-cache
     - <<: *node-cache

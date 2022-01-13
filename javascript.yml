@@ -4,10 +4,18 @@ include:
 variables:
   NODE_VERSION: 16.13.0
 
+node_modules:
+  exists: .node
+  stage: prepare
+  script:
+    - yarn install
+  cache:
+    - !reference[.node-cache]
+      policy: pull-push
+
 yarn-audit:
   extends: .node
   stage: lint
-  before_script: []
   script:
     - yarn audit
   allow_failure: true

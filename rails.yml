@@ -22,7 +22,7 @@ rspec:
   services:
     - postgres:$POSTGRES_VERSION
   before_script:
-    - !reference [.ruby, before_script]
+    - !reference[.ruby, before_script]
     - bundle exec rake db:migrate
 
 assets:precompile:
