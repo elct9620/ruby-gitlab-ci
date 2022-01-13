@@ -5,6 +5,13 @@ stages:
   - build
   - scan
 
+.ruby-cache: &ruby-cache
+  key:
+    files:
+      - Gemfile.lock
+  paths:
+    - vendor/ruby
+
 .ruby:
   image: ruby:$RUBY_VERSION
   before_script:
@@ -14,23 +21,22 @@ stages:
     - bundle config set path 'vendor'
     - bundle install
   cache:
-    key:
-      files:
-        - Gemfile.lock
-    paths:
-      - vendor/ruby
+    - <<: *ruby-cache
+
+.node-cache: &node-cache
+  key:
+    files:
+      - yarn.lock
+      - package-lock.json
+  paths:
+    - node_modules
 
 .node:
   image: node:$NODE_VERSION
   before_script:
     - yarn install
   cache:
-    key:
-      files:
-        - yarn.lock
-        - package-lock.json
-    paths:
-      - node_modules
+    - <<: *node-cache
 
 .rails:
   extends: .ruby
@@ -42,13 +48,8 @@ stages:
     - !reference [.ruby, before_script]
     - !reference [.node, before_script]
   cache:
-    key:
-      files:
-        - Gemfile.lock
-        - yarn.lock
-    paths:
-      - vendor/ruby
-      - node_modules
+    - <<: *ruby-cache
+    - <<: *node-cache
 
 .docker:
   image: docker:stable
