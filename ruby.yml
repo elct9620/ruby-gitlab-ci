@@ -17,6 +17,7 @@ rubygems:
 rubocop:
   extends: .ruby
   stage: lint
+  needs: ["rubygems"]
   script:
     - bundle exec rubocop
   rules:
@@ -44,6 +45,7 @@ bundler-leak:
 rspec:
   extends: .ruby
   stage: test
+  needs: ["rubygems"]
   script:
     - if [[ "$RSPEC_JUNIT_REPORT" == "yes" ]]; then bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml; else bundle exec rspec; fi
   artifacts:
