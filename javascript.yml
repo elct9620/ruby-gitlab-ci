@@ -5,7 +5,7 @@ variables:
   NODE_VERSION: 16.13.0
 
 node_modules:
-  exists: .node
+  extends: .node
   stage: prepare
   script:
     - yarn install
