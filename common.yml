@@ -12,6 +12,7 @@ stages:
       - Gemfile.lock
   paths:
     - vendor/ruby
+  policy: pull
 
 .ruby:
   image: ruby:$RUBY_VERSION

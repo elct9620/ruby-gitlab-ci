@@ -10,7 +10,7 @@ rubygems:
   script:
     - bundle install
   cache:
-    - <<: *ruby-cache
+    - !reference [.ruby-cache]
       policy: pull-push
 
 rubocop:
