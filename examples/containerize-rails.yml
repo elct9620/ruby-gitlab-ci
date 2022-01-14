@@ -2,9 +2,10 @@ include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
 
 node_modules:
-  - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $NODE_PACKAGE_REQUIRED == "yes"'
-  - if: '$CI_MERGE_REQUEST_ID && $NODE_PACKAGE_REQUIRED == "yes"'
-  - if: '$CI_COMMIT_TAG && $NODE_PACKAGE_REQUIRED == "yes"'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $NODE_PACKAGE_REQUIRED == "yes"'
+    - if: '$CI_MERGE_REQUEST_ID && $NODE_PACKAGE_REQUIRED == "yes"'
+    - if: '$CI_COMMIT_TAG && $NODE_PACKAGE_REQUIRED == "yes"'
 
 bundler-audit:
   rules:
