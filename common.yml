@@ -43,13 +43,16 @@ variables:
   cache:
     - <<: *node-cache
 
+.install_node:
+  # TODO: Improve Node.js install in Ruby image
+  - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -SLO https://nodejs.org/dist/v$NODE_VERSION/node-v${NODE_VERSION}-linux-x64.tar.xz && tar -xJf node-v${NODE_VERSION}-linux-x64.tar.xz -C /usr/local --strip-components=1; fi
+  - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
+  - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH; fi
+
 .rails:
   extends: .ruby
   before_script:
-    # TODO: Improve Node.js install in Ruby image
-    - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -SLO https://nodejs.org/dist/v$NODE_VERSION/node-v${NODE_VERSION}-linux-x64.tar.xz && tar -xJf node-v${NODE_VERSION}-linux-x64.tar.xz -C /usr/local --strip-components=1; fi
-    - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
-    - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH; fi
+    - !reference [.install_node]
     - !reference [.ruby, before_script]
   cache:
     - <<: *ruby-cache
