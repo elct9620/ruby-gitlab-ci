@@ -24,7 +24,7 @@ rspec:
   variables:
     RAILS_ENV: test
   before_script:
-    - !reference [.ruby, before_script]
+    - !reference [.rails, before_script]
     - bundle exec rake db:migrate
 
 assets:precompile:
