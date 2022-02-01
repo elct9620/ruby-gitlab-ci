@@ -45,11 +45,12 @@ trivy:
     - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - echo $TRIVY_VERSION
     - wget --no-verbose https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz -O - | tar -zxvf -
-    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
-      # Print report
-    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH $IMAGE_NAME:$IMAGE_TAG
-      # Fail on severe vulnerabilities
-    - ./trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress $IMAGE_NAME:$IMAGE_TAG
+    # Build report
+    - ./trivy --cache-dir .trivycache/ image --exit-code 0 --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
+    # Print report
+    - ./trivy --cache-dir .trivycache/ image --exit-code 0 --no-progress --severity HIGH $IMAGE_NAME:$IMAGE_TAG
+    # Fail on severe vulnerabilities
+    - ./trivy --cache-dir .trivycache/ image --exit-code 1 --severity CRITICAL --no-progress $IMAGE_NAME:$IMAGE_TAG
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
