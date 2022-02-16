@@ -25,6 +25,8 @@ docker:
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE
     IMAGE_TAG: $CI_COMMIT_REF_SLUG
+  retry:
+    max: 1
   rules:
     - if: '$DOCKER_ENABLED == "yes" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       variables:

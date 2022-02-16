@@ -9,6 +9,8 @@ node_modules:
   stage: prepare
   script:
     - yarn install
+  retry:
+    max: 1
   cache:
     - key: !reference [.node-cache, key]
       paths: !reference [.node-cache, paths]

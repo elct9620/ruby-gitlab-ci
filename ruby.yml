@@ -9,6 +9,8 @@ rubygems:
   stage: prepare
   script:
     - bundle install
+  retry:
+    max: 1
   cache:
     - key: !reference [.ruby-cache, key]
       paths: !reference [.ruby-cache, paths]
