@@ -39,6 +39,8 @@ trivy:
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE
     IMAGE_TAG: $CI_COMMIT_REF_SLUG
+    # Exclude built-in rubygems
+    TRIVY_OPTIONS: --skip-dirs /usr/local/lib/ruby/gems
   cache:
     key: trivy-shared
     paths:
@@ -48,11 +50,11 @@ trivy:
     - echo $TRIVY_VERSION
     - wget --no-verbose https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz -O - | tar -zxvf -
     # Build report
-    - ./trivy --cache-dir .trivycache/ image --exit-code 0 --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
+    - ./trivy --cache-dir .trivycache/ image $TRIVY_OPTIONS --exit-code 0 --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE_NAME:$IMAGE_TAG
     # Print report
-    - ./trivy --cache-dir .trivycache/ image --exit-code 0 --no-progress --severity HIGH $IMAGE_NAME:$IMAGE_TAG
+    - ./trivy --cache-dir .trivycache/ image $TRIVY_OPTIONS --exit-code 0 --no-progress --severity HIGH $IMAGE_NAME:$IMAGE_TAG
     # Fail on severe vulnerabilities
-    - ./trivy --cache-dir .trivycache/ image --exit-code 1 --severity CRITICAL --no-progress $IMAGE_NAME:$IMAGE_TAG
+    - ./trivy --cache-dir .trivycache/ image $TRIVY_OPTIONS --exit-code 1 --severity CRITICAL --no-progress $IMAGE_NAME:$IMAGE_TAG
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
