@@ -7,6 +7,8 @@ variables:
 .docker:base:
   extends: .docker
   variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE
+    IMAGE_TAG: $CI_COMMIT_REF_SLUG
     REVISION: $CI_COMMIT_SHORT_SHA
   script:
     - docker pull $IMAGE_NAME:latest || true
@@ -24,23 +26,21 @@ variables:
 docker:
   extends: .docker:base
   stage: build
-  variables:
-    IMAGE_NAME: $CI_REGISTRY_IMAGE
-    IMAGE_TAG: $CI_COMMIT_REF_SLUG
   retry:
     max: 1
   rules:
     - if: '$DOCKER_ENABLED == "yes" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       variables:
         LATEST_IMAGE: 'yes'
+    - if: '$DOCKER_ENABLED == "yes" && $CI_COMMIT_TAG'
+      variables:
+        REVISION: $CI_COMMIT_TAG
     - if: '$DOCKER_ENABLED == "yes"'
 
 trivy:
   extends: .docker
   stage: scan
   variables:
-    IMAGE_NAME: $CI_REGISTRY_IMAGE
-    IMAGE_TAG: $CI_COMMIT_REF_SLUG
     # Exclude built-in rubygems
     TRIVY_OPTIONS: --skip-dirs /usr/local/lib/ruby/gems
   cache:
@@ -62,3 +62,4 @@ trivy:
       container_scanning: gl-container-scanning-report.json
   rules:
     - if: '$TRIVY_ENABLED == "yes" && $DOCKER_ENABLED == "yes"'
+    - if: '$TRIVY_ENABLED == "yes" && $DOCKER_ENABLED == "yes" && $CI_COMMIT_TAG'
