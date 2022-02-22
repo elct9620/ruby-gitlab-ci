@@ -6,11 +6,13 @@ variables:
 
 .docker:base:
   extends: .docker
+  variables:
+    REVISION: $CI_COMMIT_SHORT_SHA
   script:
     - docker pull $IMAGE_NAME:latest || true
     - docker build
       --cache-from $IMAGE_NAME:latest
-      --build-arg REVISION=${CI_COMMIT_SHORT_SHA}
+      --build-arg REVISION=$REVISION
       --build-arg BUILDKIT_INLINE_CACHE=1
       --tag $IMAGE_NAME:$IMAGE_TAG
       --tag $IMAGE_NAME:latest .
