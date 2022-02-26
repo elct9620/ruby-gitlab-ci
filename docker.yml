@@ -8,7 +8,7 @@ variables:
   extends: .docker
   variables:
     IMAGE_NAME: $CI_REGISTRY_IMAGE
-    IMAGE_TAG: $CI_COMMIT_REF_SLUG
+    IMAGE_TAG: $CI_COMMIT_SHORT_SHA
     REVISION: $CI_COMMIT_SHORT_SHA
   script:
     - docker pull $IMAGE_NAME:latest || true
@@ -16,11 +16,11 @@ variables:
       --cache-from $IMAGE_NAME:latest
       --build-arg REVISION=$REVISION
       --build-arg BUILDKIT_INLINE_CACHE=1
-      --tag $IMAGE_NAME:$IMAGE_TAG
+      --tag $IMAGE_NAME:$CI_COMMIT_REF_SLUG
       --tag $IMAGE_NAME:latest .
+    - docker push $IMAGE_NAME:$CI_COMMIT_REF_SLUG
+    - docker tag $IMAGE_NAME:$CI_COMMIT_REF_SLUG $IMAGE_NAME:$IMAGE_TAG
     - docker push $IMAGE_NAME:$IMAGE_TAG
-    - docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - if [ "$LATEST_IMAGE" == "yes" ]; then docker push $IMAGE_NAME:latest; fi
 
 docker:
