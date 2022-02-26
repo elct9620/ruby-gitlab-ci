@@ -7,8 +7,6 @@ variables:
 .docker:base:
   extends: .docker
   variables:
-    IMAGE_NAME: $CI_REGISTRY_IMAGE
-    IMAGE_TAG: $CI_COMMIT_SHORT_SHA
     REVISION: $CI_COMMIT_SHORT_SHA
   script:
     - docker pull $IMAGE_NAME:latest || true
