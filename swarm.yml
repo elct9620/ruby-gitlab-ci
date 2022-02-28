@@ -1,0 +1,32 @@
+variables:
+  DEPLOY_ENV: production
+  DEPLOY_SCHEME: https
+  DEPLOY_DOMAIN: 127.0.0.1.xip.io
+  DEPLOY_STACK_FILE: docker-compose.yml
+  DEPLOY_STACK_NAME: myapp
+
+.deploy:
+  image: docker:stable
+  stage: deploy
+  environment:
+    name: $DEPLOY_ENV
+    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - apk -Uuv add curl
+    - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
+    - chmod +x docker-stack-wait.sh
+  script:
+    - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_STACK_NAME
+    - sleep $DEPLOY_WAIT
+    - ./docker-stack-wait.sh -r $DEPLOY_STACK_NAME
+
+.stop_deploy:
+  image: docker:stable
+  stage: deploy
+  environment:
+    name: $DEPLOY_ENV
+    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
+    action: stop
+  script:
+    - docker stack rm $DEPLOY_STACK_NAME

@@ -5,6 +5,7 @@ stages:
   - compile
   - build
   - scan
+  - deploy
 
 variables:
   NODE_PACKAGE_REQUIRED: 'yes'
