@@ -18,7 +18,7 @@ variables:
     - sleep $DEPLOY_WAIT_TIME
     - ./docker-stack-wait.sh -r $DEPLOY_NAME
 
-.stop_deploy:
+.deploy:stop:
   image: docker:stable
   stage: deploy
   environment:

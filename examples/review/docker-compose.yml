@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13.1
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - net
+  application:
+    image: "${IMAGE_NAME}:${IMAGE_TAG}"
+    environment:
+      - AUTO_MIGRATION=yes # Provided by "openbox" gem
+      - DATABASE_URL=postgres://postgres:postgres@postgres/postgres
+      - RAILS_MASTER_KEY
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == worker
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        # Hosts
+        - "traefik.http.routers.${DEPLOY_NAME}-http.rule=Host(`$DEPLOY_DOMAIN`)"
+        - "traefik.http.routers.${DEPLOY_NAME}-http.entrypoints=web"
+        - "traefik.http.routers.${DEPLOY_NAME}-http.middlewares=https-redirect"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.rule=Host(`$DEPLOY_DOMAIN`)"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.entrypoints=websecure"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.tls=true"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.tls.domains[0].sans=*.${DEPLOY_BASE_DOMAIN}"
+        - "traefik.http.services.${DEPLOY_NAME}.loadbalancer.server.port=3000"
+    networks:
+      - net
+      - traefik-public
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true
