@@ -3,6 +3,8 @@ include:
 
 variables:
   DOCKER_BUILDKIT: 1
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
 
 .docker:base:
   extends: .docker
