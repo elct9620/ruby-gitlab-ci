@@ -1,30 +1,30 @@
 variables:
-  DEPLOY_SCHEME: https
-  DEPLOY_DOMAIN: 127.0.0.1.xip.io
+  DEPLOY_BASE_DOMAIN: 127.0.0.1.xip.io
+  DEPLOY_NAME: $CI_PROJECT_ID-$CI_ENVIRONMENT_SLUG
+  DEPLOY_DOMAIN: $DEPLOY_NAME.$DEPLOY_BASE_DOMAIN
   DEPLOY_STACK_FILE: docker-compose.yml
-  DEPLOY_STACK_NAME: $CI_ENVIRONMENT_SLUG
   DEPLOY_WAIT_TIME: 60
 
 .deploy:
   image: docker:stable
   stage: deploy
   environment:
-    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
+    url: http://$DEPLOY_DOMAIN
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
     - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
     - chmod +x docker-stack-wait.sh
   script:
-    - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_STACK_NAME
+    - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_NAME
     - sleep $DEPLOY_WAIT_TIME
-    - ./docker-stack-wait.sh -r $DEPLOY_STACK_NAME
+    - ./docker-stack-wait.sh -r $DEPLOY_NAME
 
 .stop_deploy:
   image: docker:stable
   stage: deploy
   environment:
-    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
+    url: http://$DEPLOY_DOMAIN
     action: stop
   script:
-    - docker stack rm $DEPLOY_STACK_NAME
+    - docker stack rm $DEPLOY_NAME
