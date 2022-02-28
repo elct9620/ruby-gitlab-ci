@@ -38,6 +38,26 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 | Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                   |
 | Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                   |
 
+## Deployment
+
+The GitLab allows to create Review Apps when you create a merge request, we can use it for better QA flow.
+
+### Docker Swarm
+
+Based on [Docker Swarm Rocks](https://dockerswarm.rocks/) example, we can use [Traefik](https://dockerswarm.rocks/traefik/) and [GitLab Runner](https://dockerswarm.rocks/gitlab-ci/) runs on Docker Swarm to support Review Apps.
+
+Please reference to the `examples/review.yml` as example to configure your GitLab CI and `examples/review/docker-compose.yml` for you stack file.
+
+### Options
+
+| Environment Name     | Default                               | Description                                                                     |
+|----------------------|---------------------------------------|---------------------------------------------------------------------------------|
+| `DEPLOY_BASE_DOMAIN` | `127.0.0.1.xip.io`                    | When deploy we will use it as a base domain, e.g. `100-branch.127.0.0.1.xip.io` |
+| `DEPLOY_NAME`        | `$CI_PROJECT_ID-$CI-ENVIRONMENT_SLUG` | The name used to be Docker Swarm stack name or Kubernetes namespace             |
+| `DEPLOY_DOMAIN`      | `$DEPLOY_NAME.$DEPLOY_BASE_DOMAIN`    | Only work for Docker Swarm with Traefik                                         |
+| `DEPLOY_STACK_FILE`  | `docker-compose.yml`                  | The Docker Swarm stack file for deployment                                      |
+| `DEPLOY_WAIT_TIME`   | `60`                                  | Time to wait for check Docker Swarm deploy status                               |
+
 ## Roadmap
 
 * [x] Ruby support
@@ -63,3 +83,6 @@ The options are usually based on the `rules` keyword to enable the task. If you 
   * [ ] Registry
     * [x] GitLab Registry
     * [ ] AWS ECR
+* [ ] Deployment
+  * [x] Docker Swarm
+  * [ ] Kubernetes (Not decided to add)
