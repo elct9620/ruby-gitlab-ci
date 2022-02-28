@@ -1,3 +1,6 @@
+include:
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#swarm.yml
+
 variables:
   DEPLOY_ENV: production
   DEPLOY_SCHEME: https
@@ -6,7 +9,7 @@ variables:
   DEPLOY_STACK_NAME: myapp
 
 .deploy:
-  image: docker:stable
+  extends: .docker
   stage: deploy
   environment:
     name: $DEPLOY_ENV
@@ -22,11 +25,12 @@ variables:
     - ./docker-stack-wait.sh -r $DEPLOY_STACK_NAME
 
 .stop_deploy:
-  image: docker:stable
+  extends: .docker
   stage: deploy
   environment:
     name: $DEPLOY_ENV
     url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
     action: stop
+  before_script: []
   script:
     - docker stack rm $DEPLOY_STACK_NAME
