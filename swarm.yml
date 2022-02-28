@@ -8,6 +8,8 @@ variables:
 .deploy:
   image: docker:stable
   stage: deploy
+  environment:
+    url: $DEPLOY_NAME
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
@@ -17,6 +19,10 @@ variables:
     - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_NAME
     - sleep $DEPLOY_WAIT_TIME
     - ./docker-stack-wait.sh -r $DEPLOY_NAME
+    - echo "DEPLOY_DOMAIN=http://$DEPLOY_DOMAIN" >> deploy.env
+  artifacts:
+    reports:
+      dotenv: deploy.env
 
 .deploy:stop:
   image: docker:stable
