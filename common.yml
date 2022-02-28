@@ -68,4 +68,4 @@ variables:
     DOCKER_HOST: tcp://docker:2376
   before_script:
     - mkdir -p $HOME/.docker
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
