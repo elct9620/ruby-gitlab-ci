@@ -4,6 +4,7 @@ variables:
   DEPLOY_DOMAIN: 127.0.0.1.xip.io
   DEPLOY_STACK_FILE: docker-compose.yml
   DEPLOY_STACK_NAME: myapp
+  DEPLOY_WAIT_TIME: 60
 
 .deploy:
   image: docker:stable
@@ -18,7 +19,7 @@ variables:
     - chmod +x docker-stack-wait.sh
   script:
     - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_STACK_NAME
-    - sleep $DEPLOY_WAIT
+    - sleep $DEPLOY_WAIT_TIME
     - ./docker-stack-wait.sh -r $DEPLOY_STACK_NAME
 
 .stop_deploy:
