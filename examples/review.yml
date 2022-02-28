@@ -72,8 +72,6 @@ review:deploy:
   stage: deploy
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    # $DEPLOY_DOMAIN and $DEPLOY_NAME cannot correctly detected it
-    url: "http://$CI_PROJECT_ID-$CI_ENVIRONMENT_SLUG.$DEPLOY_BASE_DOMAIN"
     on_stop: review:stop
   needs:
     - docker

@@ -54,7 +54,7 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
 |----------------------|---------------------------------------|---------------------------------------------------------------------------------|
 | `DEPLOY_BASE_DOMAIN` | `127.0.0.1.xip.io`                    | When deploy we will use it as a base domain, e.g. `100-branch.127.0.0.1.xip.io` |
 | `DEPLOY_NAME`        | `$CI_PROJECT_ID-$CI-ENVIRONMENT_SLUG` | The name used to be Docker Swarm stack name or Kubernetes namespace             |
-| `DEPLOY_DOMAIN`      | `$DEPLOY_NAME.$DEPLOY_BASE_DOMAIN`    | Only work for Docker Swarm with Traefik                                         |
+| `DEPLOY_DOMAIN`      | `$DEPLOY_NAME.$DEPLOY_BASE_DOMAIN`    | Only work for Docker Swarm with Traefik will be set to environment url          |
 | `DEPLOY_STACK_FILE`  | `docker-compose.yml`                  | The Docker Swarm stack file for deployment                                      |
 | `DEPLOY_WAIT_TIME`   | `60`                                  | Time to wait for check Docker Swarm deploy status                               |
 
