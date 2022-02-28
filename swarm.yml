@@ -1,17 +1,13 @@
 variables:
-  DEPLOY_ENV: production
   DEPLOY_SCHEME: https
   DEPLOY_DOMAIN: 127.0.0.1.xip.io
   DEPLOY_STACK_FILE: docker-compose.yml
-  DEPLOY_STACK_NAME: myapp
+  DEPLOY_STACK_NAME: $CI_ENVIRONMENT_SLUG
   DEPLOY_WAIT_TIME: 60
 
 .deploy:
   image: docker:stable
   stage: deploy
-  environment:
-    name: $DEPLOY_ENV
-    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
@@ -26,8 +22,6 @@ variables:
   image: docker:stable
   stage: deploy
   environment:
-    name: $DEPLOY_ENV
-    url: $DEPLOY_SCHEME://$DEPLOY_DOMAIN
     action: stop
   script:
     - docker stack rm $DEPLOY_STACK_NAME
