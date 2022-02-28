@@ -9,7 +9,7 @@ variables:
   image: docker:stable
   stage: deploy
   environment:
-    url: $DEPLOY_NAME
+    url: $DEPLOY_DOMAIN
   before_script:
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
