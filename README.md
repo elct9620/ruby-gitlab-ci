@@ -24,7 +24,7 @@ brakeman:
     - if: $CI_MERGE_REQUEST_ID
 ```
 
-### Options
+## Options
 
 The options are usually based on the `rules` keyword to enable the task. If you overwrite the `rules` the variables are not necessary to configure.
 
@@ -37,6 +37,19 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 | Rails      | `RAILS_PRODUCTINO_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version |
 | Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                   |
 | Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                   |
+
+### S3
+
+Upload to AWS S3 or Minio to provide CDN for your applicatoin.
+
+| Environment Name       | Default                                                       | Description                                                                                   |
+|------------------------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `UPLOAD_TO_S3`         | Unset                                                         | When set to `yes` and `ASSETS_PRECOMPILE` is `yes` will run `assets:s3` job                   |
+| `S3_ENDPOINT`          | Unset                                                         | If use Minio, set to your Minio endpoint                                                      |
+| `S3_ACCESS_KEY_ID`     | Unset                                                         | If you have another `AWS_ACCESS_KEY_ID` in your tasks, use `S3_` version to overwrite it.     |
+| `S3_SECRET_ACCESS_KEY` | Unset                                                         | If you have another `AWS_SECRET_ACCESS_KEY` in your tasks, use `S3_` version to overwrite it. |
+| `S3_BUCKET`            | Unset                                                         | The bucket name to upload your static assets                                                  |
+| `S3_SYNC_DELETE`       | 'no'                                                          | Delete remote bucket files if local source not present                                        |
 
 ## Deployment
 
@@ -65,10 +78,11 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
   * [x] RSpec
   * [x] Bundler Audit
   * [x] Bundler Leak
+* [ ] Add GitLab CI `workflow` to control jobs
 * [ ] Rails support
   * [x] Brakeman
   * [x] Assets Precompile
-  * [ ] S3 Upload for CDN
+  * [x] S3 Upload for CDN
   * [ ] Database
     * [x] PostgreSQL
     * [ ] MySQL
@@ -78,7 +92,6 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
   * [ ] Jest
 * [ ] Containerize support
   * [x] Docker
-  * [ ] Dockle
   * [x] Trivy Scanner
   * [ ] Registry
     * [x] GitLab Registry
