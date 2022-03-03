@@ -53,7 +53,8 @@ assets:s3:
     entrypoint: [""]
   stage: deploy
   variables:
-    S3_SYNC_OPTIONS: '--acl public-read --cache-control "public, max-age=31536000"'
+    # NOTE: The space will split by shell, avoid to use it
+    S3_SYNC_OPTIONS: '--cache-control "public,max-age=31536000" --acl public-read'
     SE_SYNC_DELETE: 'no'
   before_script:
     - if [[ -v S3_ENDPOINT ]]; then export AWS_EXTRA_OPTIONS="${AWS_EXTRA_OPTIONS} --endpoint-url ${S3_ENDPOINT}"; fi
