@@ -52,11 +52,14 @@ assets:s3:
     name: amazon/aws-cli:latest
     entrypoint: [""]
   stage: deploy
-  script:
+  before_script:
     - if [[ -v S3_ENDPOINT ]]; then export AWS_EXTRA_OPTIONS="${AWS_EXTRA_OPTIONS} --endpoint-url ${S3_ENDPOINT}"; fi
+    - if [[ -v S3_ACCESS_KEY_ID ]]; then export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID; fi
+    - if [[ -v S3_SECRET_ACCESS_KEY ]]; then export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY; fi
+  script:
     - aws $AWS_EXTRA_OPTIONS s3 sync ./public s3://$S3_BUCKET --cache-control "public, max-age=31536000"
   needs:
     - job: assets:precompile
       artifacts: true
   rules:
-    - if: '$ASSETS_PRECOMPILE == "yes" && $S3_UPLOAD == "yes"'
+    - if: '$ASSETS_PRECOMPILE == "yes" && $UPLOAD_TO_S3 == "yes"'
