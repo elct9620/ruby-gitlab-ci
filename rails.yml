@@ -21,7 +21,7 @@ brakeman:
 rspec:
   extends: .rails
   services:
-    - postgres: $POSTGRES_VERSION
+    - "postgres:$POSTGRES_VERSION"
   variables:
     RAILS_ENV: test
   before_script:
@@ -33,7 +33,7 @@ assets:precompile:
   extends: .rails
   stage: compile
   services:
-    - postgres: $POSTGRES_VERSION
+    - "postgres:$POSTGRES_VERSION"
   variables:
     RAILS_ENV: production
   script:
