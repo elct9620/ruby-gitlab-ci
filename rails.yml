@@ -48,7 +48,9 @@ assets:precompile:
     - if: '$ASSETS_PRECOMPILE == "yes"'
 
 assets:s3:
-  image: amazon/aws-cli:latest
+  image:
+    name: amazon/aws-cli:latest
+    entrypoint: [""]
   stage: deploy
   script:
     - if [[ -v S3_ENDPOINT ]]; export AWS_EXTRA_OPTIONS="${AWS_EXTRA_OPTIONS} --endpoint-url ${S3_ENDPOINT}"; fi
