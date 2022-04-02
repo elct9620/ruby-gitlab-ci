@@ -59,6 +59,8 @@ The GitLab allows to create Review Apps when you create a merge request, we can 
 
 Based on [Docker Swarm Rocks](https://dockerswarm.rocks/) example, we can use [Traefik](https://dockerswarm.rocks/traefik/) and [GitLab Runner](https://dockerswarm.rocks/gitlab-ci/) runs on Docker Swarm to support Review Apps.
 
+P.S. You have to run a GitLab CI runner in the same host with the Swarm manager and use it to deploy to the Swarm cluster.
+
 Please reference to the `examples/review.yml` as example to configure your GitLab CI and `examples/review/docker-compose.yml` for you stack file.
 
 ### Options
