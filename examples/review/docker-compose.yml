@@ -29,10 +29,10 @@ services:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
         # Hosts
-        - "traefik.http.routers.${DEPLOY_NAME}-http.rule=Host(`$DEPLOY_DOMAIN`)"
+        - "traefik.http.routers.${DEPLOY_NAME}-http.rule=Host(`${DEPLOY_DOMAIN}`)"
         - "traefik.http.routers.${DEPLOY_NAME}-http.entrypoints=web"
         - "traefik.http.routers.${DEPLOY_NAME}-http.middlewares=https-redirect"
-        - "traefik.http.routers.${DEPLOY_NAME}-https.rule=Host(`$DEPLOY_DOMAIN`)"
+        - "traefik.http.routers.${DEPLOY_NAME}-https.rule=Host(`${DEPLOY_DOMAIN}`)"
         - "traefik.http.routers.${DEPLOY_NAME}-https.entrypoints=websecure"
         - "traefik.http.routers.${DEPLOY_NAME}-https.tls=true"
         - "traefik.http.routers.${DEPLOY_NAME}-https.tls.certresolver=letsencrypt"
