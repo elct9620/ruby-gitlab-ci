@@ -82,6 +82,7 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
 * [x] Ruby support
   * [x] Rubocop
   * [x] RSpec
+  * [x] Cucumber
   * [x] Bundler Audit
   * [x] Bundler Leak
 * [ ] Add GitLab CI `workflow` to control jobs
