@@ -38,6 +38,11 @@ variables:
     - node_modules
   policy: pull
 
+.webdrivers-cache: &webdrivers-cache
+  paths:
+    - tmp/webdrivers
+  policy: pull
+
 .node:
   image: node:$NODE_VERSION
   before_script:
@@ -58,6 +63,7 @@ variables:
   cache:
     - <<: *ruby-cache
     - <<: *node-cache
+    - <<: *webdrivers-cache
 
 .docker:
   image: docker:stable

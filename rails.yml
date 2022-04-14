@@ -4,10 +4,13 @@ include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml#rails.yml
 
 variables:
+  # Database
   POSTGRES_VERSION: 12-alpine
   POSTGRES_DB: application
   POSTGRES_PASSWORD: postgres
   DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
+  # Webdrivers
+  WD_INSTALL_DIR: $CI_PROJECT_DIR/tmp/webdrivers
 
 brakeman:
   image: registry.gitlab.com/gitlab-org/security-products/analyzers/brakeman:2
