@@ -24,6 +24,10 @@ brakeman:
     - if: $CI_MERGE_REQUEST_ID
 ```
 
+### Webdrivers
+
+To support E2E testing, the default `WD_INSTALL_DIR` will be configured to `tmp/webdrivers` with the cache. You can use `webdrivers` gem without extra download cost with Capybara or others which depend on `webdrivers`.
+
 ## Options
 
 The options are usually based on the `rules` keyword to enable the task. If you overwrite the `rules` the variables are not necessary to configure.
