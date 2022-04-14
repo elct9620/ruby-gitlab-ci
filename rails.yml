@@ -33,10 +33,10 @@ brakeman:
       sast: gl-sast-report.json
 
 rspec:
-  extends: .rails
+  extends: .rails:test
 
 cucumber:
-  extends: .rails
+  extends: .rails:test
 
 assets:precompile:
   extends: .rails
