@@ -3,6 +3,7 @@ include:
 
 variables:
   RUBY_VERSION: 3.0.3
+  CUCUMBER_PUBLISH_QUIET: true
 
 rubygems:
   extends: .ruby
