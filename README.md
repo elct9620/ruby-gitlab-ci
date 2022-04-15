@@ -28,6 +28,30 @@ brakeman:
 
 To support E2E testing, the default `WD_INSTALL_DIR` will be configured to `tmp/webdrivers` with the cache. You can use `webdrivers` gem without extra download cost with Capybara or others which depend on `webdrivers`.
 
+The Capybara should register customize driver with `--no-sandbox` options
+
+```ruby
+Capybara.register_driver :gitlab_ci do |app|
+  version = Capybara::Selenium::Driver.load_selenium
+  options_key = Capybara::Selenium::Driver::CAPS_VERSION.satisfied_by?(version) ? :capabilities : :options
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+    opts.add_argument('--headless')
+    opts.add_argument('--disable-gpu') if Gem.win_platform?
+    # Workaround https://bugs.chromium.org/p/chromedriver/issues/detail?id=2650&q=load&sort=-id&colspec=ID%20Status%20Pri%20Owner%20Summary
+    opts.add_argument('--disable-site-isolation-trials')
+    opts.add_argument('--no-sandbox')
+  end
+
+  Capybara::Selenium::Driver.new(app, **{ :browser => :chrome, options_key => browser_options })
+end
+
+Capybara.default_driver = if ENV.fetch('CI', false)
+                            :gitlab_ci
+                          else
+                            :selenium_chrome_headless
+                          end
+```
+
 ## Options
 
 The options are usually based on the `rules` keyword to enable the task. If you overwrite the `rules` the variables are not necessary to configure.
@@ -41,6 +65,7 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 | Rails      | `RAILS_PRODUCTINO_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version |
 | Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                   |
 | Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                   |
+| E2E        | `INSTALL_CHROME`        | `yes`     | Install Chrome for Cucumber E2E testing                                                |
 
 ### S3
 

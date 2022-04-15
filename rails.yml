@@ -11,6 +11,7 @@ variables:
   DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
   # Webdrivers
   WD_INSTALL_DIR: $CI_PROJECT_DIR/tmp/webdrivers
+  INSTALL_CHROME: 'yes'
 
 .rails:test:
   extends: .rails
@@ -37,6 +38,16 @@ rspec:
 
 cucumber:
   extends: .rails:test
+  before_script:
+    - !reference [.install_node]
+    - !reference [.ruby, before_script]
+    - if [[ "$INSTALL_CHROME" == "yes" ]]; then
+      curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+      && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+      && apt-get update
+      && apt-get install -y google-chrome-stable --no-install-recommends;
+      fi
+    - bundle exec rake db:migrate
 
 assets:precompile:
   extends: .rails
