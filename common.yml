@@ -74,4 +74,8 @@ variables:
     DOCKER_HOST: tcp://docker:2376
   before_script:
     - mkdir -p $HOME/.docker
+    - mkdir -p /usr/libexec/docker/cli-plugins
+    - wget https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.linux-amd64
+      -O /usr/libexec/docker/cli-plugins/docker-buildx
+    - chmod +x /usr/libexec/docker/cli-plugins/docker-buildx
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
