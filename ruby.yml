@@ -68,7 +68,7 @@ cucumber:
   stage: test
   needs: ["rubygems"]
   script:
-    - bundle exec cucumber -f junit -o tmp/cucumber
+    - bundle exec cucumber -f junit,fileattribute=true -o tmp/cucumber
   artifacts:
     paths:
       - coverage
