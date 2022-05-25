@@ -126,6 +126,7 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
 * [ ] Containerize support
   * [x] Docker
   * [x] Trivy Scanner
+    * [ ] Replace with GitLab version to generate report
   * [ ] Registry
     * [x] GitLab Registry
     * [ ] AWS ECR

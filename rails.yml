@@ -13,6 +13,9 @@ variables:
   WD_INSTALL_DIR: $CI_PROJECT_DIR/tmp/webdrivers
   BROWSER_REQUIRED: 'no'
   INSTALL_CHROME: 'yes'
+  # SAST
+  GITLAB_SECURITY_REGISTRY: registry.gitlab.com/security-products
+  GITLAB_BRAKEMAN_VERSION: 3
 
 .rails:test:
   extends: .rails
@@ -32,7 +35,7 @@ variables:
     - bundle exec rake db:migrate
 
 brakeman:
-  image: registry.gitlab.com/gitlab-org/security-products/analyzers/brakeman:2
+  image: $GITLAB_SECURITY_REGISTRY/analyzers/brakeman:$GITLAB_BRAKEMAN_VERSION
   stage: lint
   script:
     - /analyzer run
