@@ -15,6 +15,7 @@ variables:
     - apk -Uuv add curl
     - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
     - chmod +x docker-stack-wait.sh
+    # FIXME: Docker Swarm unabled detect exported environment
     - if [[ "$CI_ENVIRONMENT_NAME" == "production"]]; then export RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY}; fi
   script:
     - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_NAME
