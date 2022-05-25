@@ -7,8 +7,9 @@ variables:
   # Database
   POSTGRES_VERSION: 12-alpine
   POSTGRES_DB: application
+  POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
-  DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
+  DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/$POSTGRES_DB"
   # Webdrivers
   WD_INSTALL_DIR: $CI_PROJECT_DIR/tmp/webdrivers
   BROWSER_REQUIRED: 'no'
