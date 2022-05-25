@@ -35,7 +35,7 @@ variables:
     - bundle exec rake db:migrate
 
 brakeman:
-  image: $GITLAB_SECURITY_REGISTRY/analyzers/brakeman:$GITLAB_BRAKEMAN_VERSION
+  image: $GITLAB_SECURITY_REGISTRY/brakeman:$GITLAB_BRAKEMAN_VERSION
   stage: lint
   script:
     - /analyzer run
