@@ -27,6 +27,17 @@ rubocop:
     - exists:
       - .rubocop.yml
 
+sorbet:
+  extends: .ruby
+  stage: lint
+  needs: ["rubygems"]
+  script:
+    - bundle exec srb tc
+  rules:
+    - if: '$SORBET_ENABLED == "yes"'
+      exists:
+      - sorbet/config
+
 bundler-audit:
   extends: .ruby
   stage: lint
