@@ -44,6 +44,8 @@ trivy:
     key: trivy-shared
     paths:
       - .trivycache/
+  needs:
+    - docker
   script:
     - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - echo $TRIVY_VERSION
