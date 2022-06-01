@@ -34,7 +34,7 @@ variables:
       && apt-get install -y google-chrome-stable --no-install-recommends;
       fi
     - bundle exec rake db:migrate
-    - bundle exec rake test:prepare
+    - bundle exec rake test:prepare || true
 
 brakeman:
   image: $GITLAB_SECURITY_REGISTRY/brakeman:$GITLAB_BRAKEMAN_VERSION
