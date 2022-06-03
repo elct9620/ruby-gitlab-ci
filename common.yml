@@ -70,7 +70,7 @@ variables:
   image: docker:stable
   cache: {}
   services:
-    - docker:${DOCKER_VISION}-dind
+    - docker:${DOCKER_VERSION}-dind
   variables:
     DOCKER_HOST: tcp://docker:2376
   before_script:
