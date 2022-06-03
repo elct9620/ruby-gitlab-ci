@@ -13,7 +13,8 @@ variables:
   script:
     - export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --tag ${IMAGE_NAME}:${IMAGE_TAG}"
     - if [ "$LATEST_IMAGE" == "yes" ]; then export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:latest ${DOCKER_TAG_OPTIONS}"; fi
-    - docker buildx create --use # Enable cache export support
+    - docker context create gitlab-ci
+    - docker buildx create --use gitlab-ci # Enable cache export support
     - docker buildx build
       --cache-from type=local,src=tmp/docker
       --cache-to type=local,dest=tmp/docker
