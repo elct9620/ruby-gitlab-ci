@@ -5,6 +5,7 @@ include:
   image: getsentry/sentry-cli
   stage: deploy
   variables:
+    SENTRY_ENVIRONMENT: production
     REVISION: $CI_COMMIT_SHORT_SHA
 
 .sentry:release:
@@ -12,4 +13,4 @@ include:
   script:
     - sentry-cli releases set-commits --auto ${REVISION}
     - sentry-cli releases finalize ${REVISION}
-    - sentry-cli releases deploys ${REVISION} new -e ${CI_ENVIRONMENT_NAME}
+    - sentry-cli releases deploys ${REVISION} new -e ${SENTRY_ENVIRONMENT}
