@@ -68,7 +68,9 @@ rspec:
       - rspec.xml
     reports:
       junit: rspec.xml
-      cobertura: coverage/coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/coverage.xml
   coverage: '/\(\d+.\d+%\)/'
   rules:
     - exists:
@@ -85,7 +87,9 @@ cucumber:
       - coverage
     reports:
       junit: tmp/cucumber/**/TEST-*.xml
-      cobertura: coverage/coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/coverage.xml
   coverage: '/\(\d+.\d+%\)/'
   rules:
     - exists:
