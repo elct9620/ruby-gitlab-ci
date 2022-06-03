@@ -3,7 +3,9 @@ variables:
   DEPLOY_NAME: $CI_PROJECT_ID-$CI_ENVIRONMENT_SLUG
   DEPLOY_DOMAIN: $DEPLOY_NAME.$DEPLOY_BASE_DOMAIN
   DEPLOY_STACK_FILE: docker-compose.yml
-  DEPLOY_WAIT_TIME: 60
+  DEPLOY_WAIT_TIME:
+    value: '30'
+    description: 'The time to wait docker swarm download image'
 
 .deploy:
   image: docker:stable
