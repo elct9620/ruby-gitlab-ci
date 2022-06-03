@@ -5,7 +5,9 @@ This is GitLab CI templates for Ruby and Rails project.
 
 ## Requirements
 
-GitLab 14.3+
+GitLab 15.0+
+
+> The `cobertura` is not supported by GitLab 15.0 to continue work with 14.3+ override `artifacts` to let it worked.
 
 ## Usage
 
