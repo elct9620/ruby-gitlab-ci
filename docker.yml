@@ -14,11 +14,18 @@ variables:
     - export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --tag ${IMAGE_NAME}:${IMAGE_TAG}"
     - if [ "$LATEST_IMAGE" == "yes" ]; then export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:latest ${DOCKER_TAG_OPTIONS}"; fi
     - docker buildx build
-      --cache-from type=registry,ref=$IMAGE_NAME:latest
-      --cache-to type=inline
+      --cache-from type=local,src=tmp/docker
+      --cache-to type=local,dest=tmp/docker
       --build-arg REVISION=${REVISION}
       ${DOCKER_TAG_OPTIONS}
       --push .
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+      prefix: $CI_JOB_NAME
+    paths:
+      - tmp/docker
 
 docker:
   extends: .docker:base
