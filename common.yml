@@ -8,7 +8,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_VERSION: 20.10
+  DOCKER_VERSION: '20.10'
   NODE_PACKAGE_REQUIRED: 'yes'
 
 .ruby-cache: &ruby-cache
