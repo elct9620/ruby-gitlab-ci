@@ -79,4 +79,6 @@ variables:
     - wget https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.linux-amd64
       -O /usr/libexec/docker/cli-plugins/docker-buildx
     - chmod +x /usr/libexec/docker/cli-plugins/docker-buildx
+    - docker context create gitlab-ci
+    - docker buildx create --use gitlab-ci # Enable cache export support
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
