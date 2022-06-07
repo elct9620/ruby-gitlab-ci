@@ -58,19 +58,20 @@ Capybara.default_driver = if ENV.fetch('CI', false)
 
 The options are usually based on the `rules` keyword to enable the task. If you overwrite the `rules` the variables are not necessary to configure.
 
-| Type       | Environment Name        | Default   | Description                                                                            |
-|------------|-------------------------|-----------|----------------------------------------------------------------------------------------|
-| Ruby       | `RUBY_VERSION`          | `3.0.3`   | The ruby image version                                                                 |
-| Ruby       | `SORBET_ENABLED`        | Unset     | Enable Sorbet gem to type check                                                        |
-| JavaScript | `NODE_PACKAGE_REQUIRED` | `yes`     | If not use Webpack the node packages are not required for Rails that can be disabled   |
-| Node       | `NODE_VERSION`          | `16.13.0` | The node image version                                                                 |
-| Rails      | `ASSETS_PRECOMPILE`     | Unset     | Run Rails Assets Precompile and save into artifacts                                    |
-| Rails      | `RAILS_PRODUCTINO_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version |
-| Docker     | `DOCKER_VERSION`        | `20.10`   | The docker version used to build docker image                                          |
-| Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                   |
-| Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                   |
-| E2E        | `BROWSER_REQUIRED`      | `no`      | Install Browser for E2E testing                                                        |
-| E2E        | `INSTALL_CHROME`        | `yes`     | Install Chrome for Cucumber E2E testing                                                |
+| Type       | Environment Name        | Default   | Description                                                                                                       |
+|------------|-------------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| Ruby       | `RUBY_VERSION`          | `3.0.3`   | The ruby image version                                                                                            |
+| Ruby       | `SORBET_ENABLED`        | Unset     | Enable Sorbet gem to type check                                                                                   |
+| Ruby       | `RSPEC_JUNIT_REPORT`    | Unset     | Export JUnit report for GitLab CI with [RSpec JUnit Formatter](https://github.com/sj26/rspec_junit_formatter) gem |
+| JavaScript | `NODE_PACKAGE_REQUIRED` | `yes`     | If not use Webpack the node packages are not required for Rails that can be disabled                              |
+| Node       | `NODE_VERSION`          | `16.13.0` | The node image version                                                                                            |
+| Rails      | `ASSETS_PRECOMPILE`     | Unset     | Run Rails Assets Precompile and save into artifacts                                                               |
+| Rails      | `RAILS_PRODUCTINO_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version                            |
+| Docker     | `DOCKER_VERSION`        | `20.10`   | The docker version used to build docker image                                                                     |
+| Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                                              |
+| Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                                              |
+| E2E        | `BROWSER_REQUIRED`      | `no`      | Install Browser for E2E testing                                                                                   |
+| E2E        | `INSTALL_CHROME`        | `yes`     | Install Chrome for Cucumber E2E testing                                                                           |
 
 ### S3
 
