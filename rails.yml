@@ -29,11 +29,11 @@ variables:
     - !reference [.ruby, before_script]
     - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" ]]; then
       echo -e "\e[0Ksection_start:`date +%s`:setup_chrome[collapsed=true]\r\e[0KSetup Chrome"
-      curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+      && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
       && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
       && apt-get update
       && apt-get install -y google-chrome-stable --no-install-recommends;
-      echo -e "\e[0Ksection_end:`date +%s`:setup_chrome\r\e[0K"
+      && echo -e "\e[0Ksection_end:`date +%s`:setup_chrome\r\e[0K"
       fi
     - bundle exec rake db:migrate
     - bundle exec rake test:prepare || true
