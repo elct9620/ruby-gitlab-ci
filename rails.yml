@@ -28,10 +28,12 @@ variables:
     - !reference [.install_node]
     - !reference [.ruby, before_script]
     - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" ]]; then
+      echo -e "\e[0Ksection_start:`date +%s`:setup_chrome[collapsed=true]\r\e[0KSetup Chrome"
       curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
       && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
       && apt-get update
       && apt-get install -y google-chrome-stable --no-install-recommends;
+      echo -e "\e[0Ksection_end:`date +%s`:setup_chrome\r\e[0K"
       fi
     - bundle exec rake db:migrate
     - bundle exec rake test:prepare || true
@@ -79,10 +81,12 @@ assets:s3:
     S3_SYNC_OPTIONS: '--cache-control "public,max-age=31536000" --acl public-read'
     SE_SYNC_DELETE: 'no'
   before_script:
+    - echo -e "\e[0Ksection_start:`date +%s`:setup_s3[collapsed=true]\r\e[0KSetup S3 Options"
     - if [[ -v S3_ENDPOINT ]]; then export AWS_EXTRA_OPTIONS="${AWS_EXTRA_OPTIONS} --endpoint-url ${S3_ENDPOINT}"; fi
     - if [[ -v S3_ACCESS_KEY_ID ]]; then export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID; fi
     - if [[ -v S3_SECRET_ACCESS_KEY ]]; then export AWS_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY; fi
     - if [[ "$S3_SYNC_DELETE" == "yes" ]]; then export S3_SYNC_OPTIONS="$S3_SYNC_OPTIONS --delete"; fi
+    - echo -e "\e[0Ksection_end:`date +%s`:setup_s3\r\e[0K"
   script:
     - aws $AWS_EXTRA_OPTIONS s3 sync ./public s3://$S3_BUCKET ${S3_SYNC_OPTIONS}
   needs:

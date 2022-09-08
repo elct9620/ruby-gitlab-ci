@@ -13,11 +13,13 @@ variables:
   environment:
     url: $DEPLOY_DOMAIN
   before_script:
+    - echo -e "\e[0Ksection_start:`date +%s`:setup_docker[collapsed=true]\r\e[0KSetup Docker"
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
     - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
     - chmod +x docker-stack-wait.sh
     - if [[ "$CI_ENVIRONMENT_NAME" == "production" ]]; then export RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY}; fi
+    - echo -e "\e[0Ksection_end:`date +%s`:setup_docker\r\e[0K"
   script:
     - docker stack deploy -c $DEPLOY_STACK_FILE --with-registry-auth --prune $DEPLOY_NAME
     - sleep $DEPLOY_WAIT_TIME

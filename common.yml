@@ -24,9 +24,11 @@ variables:
   before_script:
     - export LANG=C.UTF-8
     - export LC_ALL=C.UTF-8
+    - echo -e "\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\r\e[0KBundle Install"
     - gem install bundler -v ${BUNDLER_VERSION:-2.3.20}
     - bundle config set path 'vendor'
     - bundle install # Ensure Gem installed
+    - echo -e "\e[0Ksection_end:`date +%s`:bundle_install\r\e[0K"
   cache:
     - <<: *ruby-cache
 
@@ -52,9 +54,11 @@ variables:
 
 .install_node:
   # TODO: Improve Node.js install in Ruby image
+  - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then echo -e "\e[0Ksection_start:`date +%s`:setup_node[collapsed=true]\r\e[0KSetup Node.js"; fi
   - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -SLO https://nodejs.org/dist/v$NODE_VERSION/node-v${NODE_VERSION}-linux-x64.tar.xz && tar -xJf node-v${NODE_VERSION}-linux-x64.tar.xz -C /usr/local --strip-components=1; fi
   - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
   - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH; fi
+  - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]]; then echo -e "\e[0Ksection_end:`date +%s`:setup_node\r\e[0K"; fi
 
 .rails:
   extends: .ruby
@@ -74,6 +78,7 @@ variables:
   variables:
     DOCKER_HOST: tcp://docker:2376
   before_script:
+    - echo -e "\e[0Ksection_start:`date +%s`:setup_docker[collapsed=true]\r\e[0KSetup Docker Buildx"
     - mkdir -p $HOME/.docker
     - mkdir -p /usr/libexec/docker/cli-plugins
     - wget https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.linux-amd64
@@ -82,3 +87,4 @@ variables:
     - docker context create gitlab-ci
     - docker buildx create --use gitlab-ci # Enable cache export support
     - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo -e "\e[0Ksection_end:`date +%s`:setup_docker\r\e[0K";
