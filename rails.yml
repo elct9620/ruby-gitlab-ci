@@ -45,6 +45,7 @@ brakeman:
   stage: lint
   script:
     - /analyzer run
+  interruptible: true
   artifacts:
     reports:
       sast: gl-sast-report.json
@@ -64,6 +65,7 @@ assets:precompile:
     RAILS_ENV: production
   script:
     - RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY} bundle exec rails assets:precompile
+  interruptible: true
   retry:
     max: 1
   artifacts:
