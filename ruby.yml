@@ -12,6 +12,7 @@ rubygems:
     - bundle install
   retry:
     max: 1
+  interruptible: true
   cache:
     - key: !reference [.ruby-cache, key]
       paths: !reference [.ruby-cache, paths]
@@ -23,6 +24,7 @@ rubocop:
   needs: ["rubygems"]
   script:
     - bundle exec rubocop
+  interruptible: true
   rules:
     - exists:
       - .rubocop.yml
@@ -33,6 +35,7 @@ sorbet:
   needs: ["rubygems"]
   script:
     - bundle exec srb tc
+  interruptible: true
   rules:
     - if: '$SORBET_ENABLED == "yes"'
       exists:
@@ -46,6 +49,7 @@ bundler-audit:
     - bundle audit --update
   script:
     - bundle audit
+  interruptible: true
 
 bundler-leak:
   extends: .ruby
@@ -55,6 +59,7 @@ bundler-leak:
     - bundle leak check --update
   script:
     - bundle leak
+  interruptible: true
 
 rspec:
   extends: .ruby
@@ -62,6 +67,7 @@ rspec:
   needs: ["rubygems"]
   script:
     - if [[ "$RSPEC_JUNIT_REPORT" == "yes" ]]; then bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml; else bundle exec rspec; fi
+  interruptible: true
   artifacts:
     paths:
       - coverage
@@ -82,6 +88,7 @@ cucumber:
   needs: ["rubygems"]
   script:
     - bundle exec cucumber -f junit,fileattribute=true -o tmp/cucumber
+  interruptible: true
   artifacts:
     paths:
       - coverage

@@ -25,6 +25,7 @@ variables:
     - sleep $DEPLOY_WAIT_TIME
     - ./docker-stack-wait.sh -r $DEPLOY_NAME
     - echo "DEPLOY_DOMAIN=http://$DEPLOY_DOMAIN" >> deploy.env
+  interruptible: true
   artifacts:
     reports:
       dotenv: deploy.env

@@ -9,6 +9,7 @@ node_modules:
   stage: prepare
   script:
     - yarn install
+  interruptible: true
   retry:
     max: 1
   cache:
@@ -23,6 +24,7 @@ yarn-audit:
   stage: lint
   script:
     - yarn audit
+  interruptible: true
   allow_failure: true
   rules:
     - if: '$NODE_PACKAGE_REQUIRED == "yes"'

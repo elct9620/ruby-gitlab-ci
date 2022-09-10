@@ -19,6 +19,7 @@ variables:
       --build-arg REVISION=${REVISION}
       ${DOCKER_TAG_OPTIONS}
       --push .
+  interruptible: true
   cache:
     key:
       files:
@@ -63,6 +64,7 @@ trivy:
     - ./trivy --cache-dir .trivycache/ image --exit-code 0 --no-progress --severity HIGH $IMAGE_NAME:$IMAGE_TAG
     # Fail on severe vulnerabilities
     - ./trivy --cache-dir .trivycache/ image $TRIVY_OPTIONS --exit-code 1 --severity CRITICAL --no-progress --ignore-unfixed $IMAGE_NAME:$IMAGE_TAG
+  interruptible: true
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
