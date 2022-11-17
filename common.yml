@@ -26,6 +26,7 @@ variables:
     - export LC_ALL=C.UTF-8
     - echo -e "\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\r\e[0KBundle Install"
     - gem install bundler -v ${BUNDLER_VERSION:-2.3.20}
+    - bundle config set --local force_ruby_platform false
     - bundle config set path 'vendor'
     - bundle install # Ensure Gem installed
     - echo -e "\e[0Ksection_end:`date +%s`:bundle_install\r\e[0K"
