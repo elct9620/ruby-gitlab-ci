@@ -24,6 +24,7 @@ variables:
     - export LANG=C.UTF-8
     - export LC_ALL=C.UTF-8
     - gem install bundler -v ${BUNDLER_VERSION:-2.2.28}
+    - bundle config set --local force_ruby_platform false
     - bundle config set path 'vendor'
     - bundle install # Ensure Gem installed
   cache:
