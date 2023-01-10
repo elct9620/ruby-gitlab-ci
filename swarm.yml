@@ -3,6 +3,8 @@ variables:
   DEPLOY_NAME: $CI_PROJECT_ID-$CI_ENVIRONMENT_SLUG
   DEPLOY_DOMAIN: $DEPLOY_NAME.$DEPLOY_BASE_DOMAIN
   DEPLOY_STACK_FILE: docker-compose.yml
+  DEPLOY_USER: $CI_REGISTRY_USER
+  DEPLOY_PASSWORD: $CI_JOB_TOKEN
   DEPLOY_WAIT_TIME:
     value: '30'
     description: 'The time to wait docker swarm download image'
@@ -14,7 +16,8 @@ variables:
     url: $DEPLOY_DOMAIN
   before_script:
     - echo -e "\e[0Ksection_start:`date +%s`:setup_docker[collapsed=true]\r\e[0KSetup Docker"
-    - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - if [[ -v CI_DEPLOY_USER ]] && [[ -v CI_DEPLOY_PASSWORD ]]; then export DEPLOY_USER=$CI_DEPLOY_USER; DEPLOY_PASSWORD=$CI_DEPLOY_PASSWORD; fi
+    - echo "$DEPLOY_PASSWORD" | docker login -u $DEPLOY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
     - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
     - chmod +x docker-stack-wait.sh
