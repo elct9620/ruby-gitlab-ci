@@ -77,7 +77,7 @@ trivy:
     # Prints full report
     - time trivy image --exit-code 0 "$FULL_IMAGE_NAME"
     # Fail on critical vulnerabilities
-    - time trivy image --exit-code 1 $TRIVY_OPTIONS --severity CRITICAL "$FULL_IMAGE_NAME"
+    - time trivy image --exit-code 1 --skip-java-db-update $TRIVY_OPTIONS --severity CRITICAL "$FULL_IMAGE_NAME"
   interruptible: true
   artifacts:
     when:
