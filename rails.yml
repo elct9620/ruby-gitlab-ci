@@ -27,8 +27,7 @@ variables:
   variables:
     RAILS_ENV: test
   before_script:
-    - !reference [.install_node]
-    - !reference [.ruby, before_script]
+    - !reference [.rails, before_script]
     - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" ]]; then
       echo -e "\e[0Ksection_start:`date +%s`:setup_chrome[collapsed=true]\r\e[0KSetup Chrome"
       && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
