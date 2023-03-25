@@ -17,6 +17,8 @@ variables:
   # SAST
   GITLAB_SECURITY_REGISTRY: registry.gitlab.com/security-products
   GITLAB_BRAKEMAN_VERSION: 3
+  # Rails
+  SECRET_KEY_BASE_DUMMY: 1
 
 .rails:test:
   extends: .rails
