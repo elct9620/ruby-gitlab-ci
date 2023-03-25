@@ -71,6 +71,7 @@ assets:precompile:
     max: 1
   artifacts:
     paths:
+      - public/vite
       - public/packs
       - public/assets
   rules:
