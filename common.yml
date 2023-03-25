@@ -67,6 +67,11 @@ variables:
   extends: .ruby
   before_script:
     - !reference [.install_node]
+    - if [[ "$NODE_PACKAGE_REQUIRED" == "yes" ]];
+      then echo -e "\e[0Ksection_start:`date +%s`:yarn_install[collapsed=true]\r\e[0KYarn Install"
+      && yarn install
+      && echo -e "\e[0Ksection_end:`date +%s`:yarn_install\r\e[0K";
+      fi
     - !reference [.ruby, before_script]
   cache:
     - <<: *ruby-cache
