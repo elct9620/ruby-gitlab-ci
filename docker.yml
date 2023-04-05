@@ -2,9 +2,29 @@ include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#docker.yml
 
 variables:
+  DOCKER_VERSION: '20.10'
   DOCKER_BUILDX_VERSION: 0.8.2
   IMAGE_NAME: $CI_REGISTRY_IMAGE
   IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+
+.docker:
+  image: docker:stable
+  cache: {}
+  services:
+    - docker:${DOCKER_VERSION}-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+  before_script:
+    - mkdir -p $HOME/.docker
+    - echo -e "\e[0Ksection_start:`date +%s`:setup_docker[collapsed=true]\r\e[0KSetup Docker Buildx"
+    - mkdir -p /usr/libexec/docker/cli-plugins
+    - wget https://github.com/docker/buildx/releases/download/v${DOCKER_BUILDX_VERSION}/buildx-v${DOCKER_BUILDX_VERSION}.linux-amd64
+      -O /usr/libexec/docker/cli-plugins/docker-buildx
+    - chmod +x /usr/libexec/docker/cli-plugins/docker-buildx
+    - docker context create gitlab-ci
+    - docker buildx create --use gitlab-ci # Enable cache export support
+    - echo -e "\e[0Ksection_end:`date +%s`:setup_docker\r\e[0K";
+    - echo "$CI_JOB_TOKEN" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
 .docker:base:
   extends: .docker
@@ -24,7 +44,7 @@ variables:
     key:
       files:
         - Gemfile.lock
-      prefix: $CI_JOB_NAME
+      prefix: $CI_COMMIT_REF_NAME
     paths:
       - tmp/docker
 
