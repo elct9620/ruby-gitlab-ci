@@ -2,7 +2,7 @@ include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#ruby.yml
 
 variables:
-  RUBY_VERSION: 3.0.3
+  RUBY_VERSION: 3.2.2
   CUCUMBER_PUBLISH_QUIET: 'true'
 
 rubygems:

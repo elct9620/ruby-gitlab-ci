@@ -2,7 +2,7 @@ include:
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#javascript.yml
 
 variables:
-  NODE_VERSION: 16.13.0
+  NODE_VERSION: 18.16.0
 
 node_modules:
   extends: .node

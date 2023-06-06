@@ -60,14 +60,14 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 
 | Type       | Environment Name        | Default   | Description                                                                                                       |
 |------------|-------------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
-| Ruby       | `RUBY_VERSION`          | `3.0.3`   | The ruby image version                                                                                            |
+| Ruby       | `RUBY_VERSION`          | `3.2.2`   | The ruby image version                                                                                            |
 | Ruby       | `SORBET_ENABLED`        | Unset     | Enable Sorbet gem to type check                                                                                   |
 | Ruby       | `RSPEC_JUNIT_REPORT`    | Unset     | Export JUnit report for GitLab CI with [RSpec JUnit Formatter](https://github.com/sj26/rspec_junit_formatter) gem |
 | JavaScript | `NODE_PACKAGE_REQUIRED` | `yes`     | If not use Webpack the node packages are not required for Rails that can be disabled                              |
-| Node       | `NODE_VERSION`          | `16.13.0` | The node image version                                                                                            |
+| Node       | `NODE_VERSION`          | `18.16.0` | The node image version                                                                                            |
 | Rails      | `ASSETS_PRECOMPILE`     | Unset     | Run Rails Assets Precompile and save into artifacts                                                               |
 | Rails      | `RAILS_PRODUCTION_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version                            |
-| Docker     | `DOCKER_VERSION`        | `20.10`   | The docker version used to build docker image                                                                     |
+| Docker     | `DOCKER_VERSION`        | `24.0`   | The docker version used to build docker image                                                                     |
 | Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                                              |
 | Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                                              |
 | E2E        | `BROWSER_REQUIRED`      | `no`      | Install Browser for E2E testing                                                                                   |
