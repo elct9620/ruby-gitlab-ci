@@ -14,7 +14,7 @@ variables:
   key:
     files:
       - Gemfile.lock
-    prefix: $CI_COMMIT_REF_NAME
+    prefix: ruby-$CI_COMMIT_REF_NAME
   paths:
     - vendor/ruby
   policy: pull
@@ -37,7 +37,7 @@ variables:
     files:
       - yarn.lock
       - package-lock.json
-    prefix: $CI_COMMIT_REF_NAME
+    prefix: node-$CI_COMMIT_REF_NAME
   paths:
     - node_modules
   policy: pull
