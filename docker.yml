@@ -33,10 +33,12 @@ variables:
   script:
     - export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --tag ${IMAGE_NAME}:${IMAGE_TAG}"
     - if [ "$LATEST_IMAGE" == "yes" ]; then export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:latest ${DOCKER_TAG_OPTIONS}"; fi
+    # Workaround for missing manifest digest to add --provenance false
     - docker buildx build
       --cache-from type=local,src=tmp/docker
       --cache-to type=local,dest=tmp/docker
       --build-arg REVISION=${REVISION}
+      --provenance false
       ${DOCKER_TAG_OPTIONS}
       --push .
   interruptible: true
