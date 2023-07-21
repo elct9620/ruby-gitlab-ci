@@ -67,11 +67,12 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 | Node       | `NODE_VERSION`          | `18.16.0` | The node image version                                                                                            |
 | Rails      | `ASSETS_PRECOMPILE`     | Unset     | Run Rails Assets Precompile and save into artifacts                                                               |
 | Rails      | `RAILS_PRODUCTION_KEY`  | Unset     | When assets precompile we may need to replace `RAILS_MASTER_KEY` to production version                            |
-| Docker     | `DOCKER_VERSION`        | `24.0`   | The docker version used to build docker image                                                                     |
+| Docker     | `DOCKER_VERSION`        | `24.0`    | The docker version used to build docker image                                                                     |
 | Docker     | `DOCKER_ENABLED`        | Unset     | Run `docker build .`                                                                                              |
 | Docker     | `TRIVY_ENABLED`         | Unset     | Use [trivy](https://github.com/aquasecurity/trivy) to scan container                                              |
 | E2E        | `BROWSER_REQUIRED`      | `no`      | Install Browser for E2E testing                                                                                   |
 | E2E        | `INSTALL_CHROME`        | `yes`     | Install Chrome for Cucumber E2E testing                                                                           |
+| E2E        | `CHROME_VERSION`        | Unset     | Specify Chrome version that match chromedriver version, e.g. `114.0.5735.90-1`
 
 ### S3
 
