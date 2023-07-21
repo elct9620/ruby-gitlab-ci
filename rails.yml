@@ -32,9 +32,15 @@ variables:
       echo -e "\e[0Ksection_start:`date +%s`:setup_chrome[collapsed=true]\r\e[0KSetup Chrome"
       && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
       && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-      && apt-get update
-      && apt-get install -y google-chrome-stable --no-install-recommends
-      && echo -e "\e[0Ksection_end:`date +%s`:setup_chrome\r\e[0K";
+      && apt-get update;
+      fi
+    - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" && -v CHROME_VERSION ]]; then
+      apt-get install -y google-chrome-stable=${CHROME_VERSION} --no-install-recommends;
+      else
+      apt-get install -y google-chrome-stable --no-install-recommends;
+      fi
+    - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" ]]; then
+      echo -e "\e[0Ksection_end:`date +%s`:setup_chrome\r\e[0K";
       fi
     - echo -e "\e[0Ksection_start:`date +%s`:prepare_rails_test[collapsed=true]\r\e[0KPrepare Rails Test"
     - bundle exec rake db:migrate
