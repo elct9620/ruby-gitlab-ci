@@ -36,8 +36,8 @@ variables:
       fi
     - if [[ "$BROWSER_REQUIRED" == "yes" && "$INSTALL_CHROME" == "yes" && -v CHROME_VERSION ]]; then
       wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb \
-      && apt install -y /tmp/chrome.deb --no-install-recommends; \
-      && rm /tmp/chrome.deb
+      && apt install -y /tmp/chrome.deb --no-install-recommends \
+      && rm /tmp/chrome.deb;
       else
       apt-get install -y google-chrome-stable --no-install-recommends;
       fi
