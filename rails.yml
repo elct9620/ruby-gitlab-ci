@@ -5,7 +5,7 @@ include:
 
 variables:
   # Database
-  POSTGRES_VERSION: 12-alpine
+  POSTGRES_VERSION: 15-alpine
   POSTGRES_DB: application
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
