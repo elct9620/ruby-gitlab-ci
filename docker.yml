@@ -35,8 +35,8 @@ variables:
     - if [ "$LATEST_IMAGE" == "yes" ]; then export DOCKER_TAG_OPTIONS="--tag ${IMAGE_NAME}:latest ${DOCKER_TAG_OPTIONS}"; fi
     # Workaround for missing manifest digest to add --provenance false
     - docker buildx build
-      --cache-from type=local,src=tmp/docker
-      --cache-to type=local,dest=tmp/docker
+      --cache-from type=registry,ref=${IMAGE_NAME}:buildcache
+      --cache-to type=registry,ref=${IMAGE_NAME}:buildcache,mode=max,image-manifest=true
       --build-arg REVISION=${REVISION}
       --provenance false
       ${DOCKER_TAG_OPTIONS}
@@ -47,8 +47,6 @@ variables:
       files:
         - Gemfile.lock
       prefix: docker-$CI_COMMIT_REF_NAME
-    paths:
-      - tmp/docker
 
 docker:
   extends: .docker:base
