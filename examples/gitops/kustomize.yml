@@ -1,0 +1,18 @@
+include:
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/kustomize.yml
+
+variables:
+  DOCKER_ENABLED: 'yes'
+  # Configured in GitLab CI/CD settings
+  CI_GITOPS_TOKEN: 'example'
+  CI_GITOPS_REPO: 'gitlab.com/elct9620/gitops.git'
+
+deploy:
+  extends: .kustomize
+  environment:
+    name: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        DEPLOY_DOMAIN: https://gitops.example.com/
