@@ -160,4 +160,5 @@ The [GitOps](https://about.gitlab.com/topics/gitops/) allow us to management dep
     * [ ] AWS ECR
 * [ ] Deployment
   * [x] Docker Swarm
-  * [ ] Kubernetes (Not decided to add)
+  * [x] Kubernetes
+    * [x] ArgoCD (Kustomize)
