@@ -17,8 +17,6 @@ variables:
   # SAST
   GITLAB_SECURITY_REGISTRY: registry.gitlab.com/security-products
   GITLAB_BRAKEMAN_VERSION: 3
-  # Rails
-  SECRET_KEY_BASE_DUMMY: 1
 
 .rails:test:
   extends: .rails
@@ -73,6 +71,7 @@ assets:precompile:
     - "postgres:$POSTGRES_VERSION"
   variables:
     RAILS_ENV: production
+    SECRET_KEY_BASE_DUMMY: 1
   script:
     - RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY} bundle exec rails assets:precompile
   interruptible: true
