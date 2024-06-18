@@ -44,6 +44,7 @@ sorbet:
 bundler-audit:
   extends: .ruby
   stage: lint
+  needs: ["rubygems"]
   before_script:
     - gem install bundler-audit
     - bundle audit --update
@@ -54,6 +55,7 @@ bundler-audit:
 bundler-leak:
   extends: .ruby
   stage: lint
+  needs: ["rubygems"]
   before_script:
     - gem install bundler-leak
     - bundle leak check --update

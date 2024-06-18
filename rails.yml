@@ -51,6 +51,7 @@ variables:
 brakeman:
   image: $GITLAB_SECURITY_REGISTRY/brakeman:$GITLAB_BRAKEMAN_VERSION
   stage: lint
+  needs: ["rubygems"]
   script:
     - /analyzer run
   interruptible: true
