@@ -60,6 +60,8 @@ The options are usually based on the `rules` keyword to enable the task. If you 
 
 | Type       | Environment Name        | Default   | Description                                                                                                       |
 |------------|-------------------------|-----------|-------------------------------------------------------------------------------------------------------------------|
+| Ruby       | `RUBY_PLATFORM`         | `ruby`    | The ruby plarform, available values: ruby, jruby                                                                  |
+
 | Ruby       | `RUBY_VERSION`          | `3.2.2`   | The ruby image version                                                                                            |
 | Ruby       | `SORBET_ENABLED`        | Unset     | Enable Sorbet gem to type check                                                                                   |
 | Ruby       | `RSPEC_JUNIT_REPORT`    | Unset     | Export JUnit report for GitLab CI with [RSpec JUnit Formatter](https://github.com/sj26/rspec_junit_formatter) gem |
@@ -133,6 +135,7 @@ The [GitOps](https://about.gitlab.com/topics/gitops/) allow us to management dep
 
 ## Roadmap
 
+* [x] JRuby Support
 * [x] Ruby support
   * [x] Rubocop
   * [x] RSpec
