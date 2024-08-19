@@ -1,5 +1,18 @@
+spec:
+  inputs:
+    platform:
+      description: 'The Ruby platform to use'
+      type: string
+      options:
+        - 'ruby'
+        - 'jruby'
+      default: 'ruby'
+---
+
 include:
   remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#docker.yml
+  inputs:
+    platform: $[[ inputs.platform ]]
 
 variables:
   DOCKER_VERSION: '24.0'
