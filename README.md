@@ -15,7 +15,7 @@ Include YAML in your `.gitlab-ci.yml` and apply `variables` and `rules` to contr
 
 ```yaml
 include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/rails.yml
 
 variables:
   RUBY_VERSION: 2.7.4

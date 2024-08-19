@@ -1,6 +1,6 @@
 include:
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/kustomize.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/docker.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/kustomize.yml
 
 variables:
   DOCKER_ENABLED: 'yes'

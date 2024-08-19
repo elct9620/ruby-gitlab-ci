@@ -1,5 +1,5 @@
 include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#sentry.yml
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/common.yml#sentry.yml
 
 .sentry:base:
   image: getsentry/sentry-cli

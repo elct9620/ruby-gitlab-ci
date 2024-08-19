@@ -1,7 +1,7 @@
 include:
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/ruby.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml#rails.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/ruby.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/javascript.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/docker.yml#rails.yml
 
 variables:
   # Database

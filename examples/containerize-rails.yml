@@ -1,5 +1,5 @@
 include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
+  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/rails.yml
 
 node_modules:
   rules:

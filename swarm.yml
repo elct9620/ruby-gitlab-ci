@@ -19,7 +19,7 @@ variables:
     - if [[ -v CI_DEPLOY_USER ]] && [[ -v CI_DEPLOY_PASSWORD ]]; then export DEPLOY_USER=$CI_DEPLOY_USER; DEPLOY_PASSWORD=$CI_DEPLOY_PASSWORD; fi
     - echo "$DEPLOY_PASSWORD" | docker login -u $DEPLOY_USER --password-stdin $CI_REGISTRY
     - apk -Uuv add curl
-    - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/main/docker-stack-wait.sh
+    - curl -LO https://github.com/sudo-bmitch/docker-stack-wait/raw/v1/docker-stack-wait.sh
     - chmod +x docker-stack-wait.sh
     - if [[ "$CI_ENVIRONMENT_NAME" == "production" ]]; then export RAILS_MASTER_KEY=${RAILS_PRODUCTION_KEY:-$RAILS_MASTER_KEY}; fi
     - echo -e "\e[0Ksection_end:`date +%s`:setup_docker\r\e[0K"

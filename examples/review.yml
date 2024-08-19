@@ -1,6 +1,6 @@
 include:
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/rails.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/swarm.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/rails.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/v1/swarm.yml
 
 node_modules:
   rules:
