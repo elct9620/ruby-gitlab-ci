@@ -26,6 +26,9 @@ brakeman:
     - if: $CI_MERGE_REQUEST_ID
 ```
 
+> [!WARNING]
+> For previous version use `raw/v1` instead of `raw/main` in the URL.
+
 ### Webdrivers
 
 To support E2E testing, the default `WD_INSTALL_DIR` will be configured to `tmp/webdrivers` with the cache. You can use `webdrivers` gem without extra download cost with Capybara or others which depend on `webdrivers`.
