@@ -1,25 +1,47 @@
 spec:
   inputs:
     platform:
-      description: 'The Ruby platform to use'
+      description: 'The JavaScript platform to use'
       type: string
       options:
-        - 'ruby'
-        - 'jruby'
-      default: 'ruby'
+        - 'node'
+      default: 'node'
+
+    version:
+      description: 'The JavaScript platform version to use'
+      type: string
+      default: '18.16.0'
+
+    prepare_stage:
+      description: 'The stage to prepare the node_modules'
+      type: string
+      default: 'prepare'
+
+    lint_stage:
+      description: 'The stage to run the linting'
+      type: string
+      default: 'lint'
 ---
 
-include:
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#javascript.yml
-    inputs:
-      platform: $[[ inputs.platform ]]
+.node-cache: &node-cache
+  key:
+    files:
+      - yarn.lock
+      - package-lock.json
+    prefix: node-$CI_COMMIT_REF_NAME
+  paths:
+    - node_modules
+  policy: pull
 
-variables:
-  NODE_VERSION: 18.16.0
+.node:
+  image: $[[ inputs.platform ]]:$[[ inputs.version ]]
+  before_script:
+  cache:
+    - <<: *node-cache
 
 node_modules:
   extends: .node
-  stage: prepare
+  stage: $[[ inputs.prepare_stage ]]
   script:
     - yarn install
   interruptible: true
@@ -34,7 +56,7 @@ node_modules:
 
 yarn-audit:
   extends: .node
-  stage: lint
+  stage: $[[ inputs.lint_stage ]]
   script:
     - yarn audit
   interruptible: true

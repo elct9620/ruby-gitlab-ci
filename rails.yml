@@ -14,7 +14,8 @@ include:
     inputs:
       platform: $[[ inputs.platform ]]
   - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/javascript.yml
-  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml#rails.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/docker.yml
+  - remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/trivy.yml
 
 variables:
   # Database

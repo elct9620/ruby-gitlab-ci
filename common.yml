@@ -19,6 +19,7 @@ stages:
   - deploy
 
 variables:
+  NODE_VERSION: 18.16.0
   NODE_PACKAGE_REQUIRED: 'yes'
 
 .ruby-cache: &ruby-cache
@@ -43,26 +44,10 @@ variables:
   cache:
     - <<: *ruby-cache
 
-.node-cache: &node-cache
-  key:
-    files:
-      - yarn.lock
-      - package-lock.json
-    prefix: node-$CI_COMMIT_REF_NAME
-  paths:
-    - node_modules
-  policy: pull
-
 .webdrivers-cache: &webdrivers-cache
   paths:
     - tmp/webdrivers
   policy: pull
-
-.node:
-  image: node:$NODE_VERSION
-  before_script:
-  cache:
-    - <<: *node-cache
 
 .install_node:
   # TODO: Improve Node.js install in Ruby image
