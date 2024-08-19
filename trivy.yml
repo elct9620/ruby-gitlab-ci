@@ -28,7 +28,7 @@ trivy:
     TRIVY_USERNAME: "$CI_REGISTRY_USER"
     TRIVY_PASSWORD: "$CI_REGISTRY_PASSWORD"
     TRIVY_AUTH_URL: "$CI_REGISTRY"
-    FULL_IMAGE_NAME: "$[[ inputs.image_name | expand_vars ]:$[[ inputs.image_tag | expand_vars ]]"
+    FULL_IMAGE_NAME: "$[[ inputs.image_name | expand_vars ]]:$[[ inputs.image_tag | expand_vars ]]"
     TRIVY_NO_PROGRESS: "true"
     TRIVY_CACHE_DIR: ".trivycache/"
   cache:
