@@ -1,22 +1,14 @@
 spec:
   inputs:
-    platform:
-      description: 'The Ruby platform to use'
+    stage:
+      description: 'The stage to run the Sentry'
       type: string
-      options:
-        - 'ruby'
-        - 'jruby'
-      default: 'ruby'
+      default: 'deploy'
 ---
-
-include:
-  remote: https://github.com/elct9620/ruby-gitlab-ci/raw/main/common.yml#sentry.yml
-  inputs:
-    platform: $[[ inputs.platform ]]
 
 .sentry:base:
   image: getsentry/sentry-cli
-  stage: deploy
+  stage: $[[ inputs.stage ]]
   variables:
     SENTRY_ENVIRONMENT: production
     REVISION: $CI_COMMIT_SHORT_SHA
