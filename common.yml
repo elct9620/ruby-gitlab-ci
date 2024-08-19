@@ -22,6 +22,16 @@ variables:
   NODE_VERSION: 18.16.0
   NODE_PACKAGE_REQUIRED: 'yes'
 
+.common-node-cache: &common-node-cache
+  key:
+    files:
+      - yarn.lock
+      - package-lock.json
+    prefix: node-$CI_COMMIT_REF_NAME
+  paths:
+    - node_modules
+  policy: pull
+
 .ruby-cache: &ruby-cache
   key:
     files:
@@ -72,5 +82,5 @@ variables:
     - !reference [.ruby, before_script]
   cache:
     - <<: *ruby-cache
-    - <<: *node-cache
+    - <<: *common-node-cache
     - <<: *webdrivers-cache
