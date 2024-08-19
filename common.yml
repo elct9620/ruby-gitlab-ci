@@ -1,3 +1,14 @@
+spec:
+  inputs:
+    platform:
+      description: 'The Ruby platform to use'
+      type: string
+      options:
+        - 'ruby'
+        - 'jruby'
+      default: 'ruby'
+---
+
 stages:
   - prepare
   - lint
@@ -20,7 +31,7 @@ variables:
   policy: pull
 
 .ruby:
-  image: ruby:$RUBY_VERSION
+  image: $[[ inputs.platform ]]:$RUBY_VERSION
   before_script:
     - export LANG=C.UTF-8
     - export LC_ALL=C.UTF-8
