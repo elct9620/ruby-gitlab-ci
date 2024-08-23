@@ -117,6 +117,14 @@ Please reference to the `examples/review.yml` as example to configure your GitLa
 | `DEPLOY_STACK_FILE`  | `docker-compose.yml`                  | The Docker Swarm stack file for deployment                                      |
 | `DEPLOY_WAIT_TIME`   | `60`                                  | Time to wait for check Docker Swarm deploy status                               |
 
+### Sentry
+
+The Sentry can associate commit with repository, we can use it to track the error and performance.
+
+| Environment Name    | Default | Description                                                     |
+|---------------------|---------|-----------------------------------------------------------------|
+| `SENTRY_AUTH_TOKEN` | Unset   | The Sentry Auth Token to upload source map and associate commit |
+
 ### GitOps
 
 The [GitOps](https://about.gitlab.com/topics/gitops/) allow us to management deployment by git and make it trackable.
