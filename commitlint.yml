@@ -19,7 +19,7 @@ commitlint:
     - if [ -z "${CI_MERGE_REQUEST_DIFF_BASE_SHA}"]; then
       echo "Linting from: ${CI_MERGE_REQUEST_DIFF_BASE_SHA} to ${CI_COMMIT_SHA}";
       else
-      echo "Linting from: ${CI_COMMIT_BEFORE_SHA} to ${CI_COMMIT_SHA}"
+      echo "Linting from: ${CI_COMMIT_BEFORE_SHA} to ${CI_COMMIT_SHA}";
       fi
     - if [ -z "${CI_MERGE_REQUEST_DIFF_BASE_SHA}"]; then
       commitlint --from=${CI_MERGE_REQUEST_DIFF_BASE_SHA} --to=${CI_COMMIT_SHA};
