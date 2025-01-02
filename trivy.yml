@@ -30,7 +30,6 @@ trivy:
   variables:
     # Exclude built-in rubygems
     TRIVY_OPTIONS: --skip-dirs /usr/local/lib/ruby/gems
-    USER_TRIVY_OPTS: $[[ inputs.options | expand_vars ]]
     # No need to clone the repo, we exclusively work on artifacts.  See
     # https://docs.gitlab.com/ee/ci/runners/README.html#git-strategy
     GIT_STRATEGY: none
@@ -59,7 +58,7 @@ trivy:
     # Prints full report
     - time trivy image --exit-code 0 "$FULL_IMAGE_NAME"
     # Fail on critical vulnerabilities
-    - time trivy image --exit-code 1 --skip-java-db-update $TRIVY_OPTIONS $USER_TRIVY_OPTIONS "$FULL_IMAGE_NAME"
+    - time trivy image --exit-code 1 --skip-java-db-update $TRIVY_OPTIONS $[[ inputs.options ]] "$FULL_IMAGE_NAME"
   interruptible: true
   artifacts:
     when:
