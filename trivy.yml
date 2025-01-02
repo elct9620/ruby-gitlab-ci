@@ -12,6 +12,14 @@ spec:
       description: 'The image tag to scan'
       type: string
       default: '$CI_COMMIT_SHORT_SHA'
+    options:
+      description: 'The options to pass to Trivy'
+      type: string
+      default: '--severity HIGH,CRITICAL'
+    timeout:
+      description: 'The timeout for the scan'
+      type: string
+      default: '15m'
 ---
 
 trivy:
@@ -22,6 +30,7 @@ trivy:
   variables:
     # Exclude built-in rubygems
     TRIVY_OPTIONS: --skip-dirs /usr/local/lib/ruby/gems
+    USER_TRIVY_OPTS: $[[ inputs.options | expand_vars ]]
     # No need to clone the repo, we exclusively work on artifacts.  See
     # https://docs.gitlab.com/ee/ci/runners/README.html#git-strategy
     GIT_STRATEGY: none
@@ -46,11 +55,11 @@ trivy:
     # Builds report and puts it in the default workdir $CI_PROJECT_DIR, so `artifacts:` can take it from there
     - time trivy image --exit-code 0 --format template --template "@/contrib/gitlab.tpl"
         --output "$CI_PROJECT_DIR/gl-container-scanning-report.json" "$FULL_IMAGE_NAME"
-        --timeout 15m
+        --timeout $[[ inputs.timeout ]]
     # Prints full report
     - time trivy image --exit-code 0 "$FULL_IMAGE_NAME"
     # Fail on critical vulnerabilities
-    - time trivy image --exit-code 1 --skip-java-db-update $TRIVY_OPTIONS --severity CRITICAL "$FULL_IMAGE_NAME"
+    - time trivy image --exit-code 1 --skip-java-db-update $TRIVY_OPTIONS $USER_TRIVY_OPTIONS "$FULL_IMAGE_NAME"
   interruptible: true
   artifacts:
     when:
