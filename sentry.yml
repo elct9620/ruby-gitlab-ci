@@ -13,6 +13,11 @@ spec:
     SENTRY_ENVIRONMENT: production
     REVISION: $CI_COMMIT_SHORT_SHA
 
+.sentry:new-release:
+  extends: .sentry:base
+  script:
+    - sentry-cli releases new ${REVISION}
+
 .sentry:release:
   extends: .sentry:base
   script:
